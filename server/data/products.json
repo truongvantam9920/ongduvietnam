@@ -1,24 +1,28 @@
 {
   "categories": [
     {
+      "id": 1,
       "name": "Mật Ong Dú Đa Hoa Rừng",
       "slug": "mat-ong-du-da-hoa-rung",
       "description": "Mật ong từ giống ong không ngòi đốt Meliponini, vị ngọt thanh hậu chua dịu tự nhiên, giàu Trehalulose và enzyme sống.",
       "order_index": 1
     },
     {
+      "id": 2,
       "name": "Keo Ong Dú (Propolis) Thượng Hạng",
       "slug": "keo-ong-du-propolis",
       "description": "Chiết xuất từ keo ong nguyên chất, chất kháng sinh tự nhiên hỗ trợ đề kháng và dịu họng.",
       "order_index": 2
     },
     {
+      "id": 3,
       "name": "Phấn Hoa & Sáp Cerumen Ong Dú",
       "slug": "phan-hoa-sap-cerumen",
       "description": "Hạt phấn hoa vi mô và sáp tổ Cerumen giàu dưỡng chất bồi bổ sinh lực.",
       "order_index": 3
     },
     {
+      "id": 4,
       "name": "Hộp Quà & Combo Sức Khỏe",
       "slug": "combo-qua-tang-suc-khoe",
       "description": "Bộ sưu tập quà biếu cao cấp kết hợp mật ong dú rừng, keo ong giọt và phụ kiện gỗ tự nhiên.",
@@ -27,8 +31,10 @@
   ],
   "products": [
     {
+      "id": 1,
       "name": "Mật Ong Dú Rừng Nguyên Chất Thượng Hạng (Chai Thủy Tinh 250ml)",
       "slug": "mat-ong-du-rung-nguyen-chat-250ml",
+      "category_id": 1,
       "category_slug": "mat-ong-du-da-hoa-rung",
       "short_description": "Mật ong dú Meliponini nguyên chất 100%, vị ngọt thanh pha chua nhẹ tự nhiên, giàu đường quý Trehalulose và polyphenol chống oxy hóa.",
       "description": "Mật ong dú (Stingless Bee Honey) thuộc phân họ Meliponini. Đây là giống ong bản địa tí hon hoàn toàn không có ngòi đốt.\n\nĐặc tính nổi bật:\n- Khai thác từ giống ong Tetragonula có khả năng thu lượm mật từ các loài hoa dại li ti.\n- Vị chua thanh tự nhiên độc bản nhờ quá trình lên men trong túi sáp Cerumen.\n- Giàu đường quý Trehalulose phóng thích năng lượng chậm, chỉ số đường huyết thấp.\n- Sản lượng mỗi tổ cực kỳ khan hiếm: chỉ từ 0,2 đến 1,5 lít mật/năm.",
@@ -52,8 +58,10 @@
       "review_count": 58
     },
     {
+      "id": 2,
       "name": "Mật Ong Dú Rừng Đại Ngàn Chai Thủy Tinh Sẫm Màu 500ml",
       "slug": "mat-ong-du-rung-dai-ngan-500ml",
+      "category_id": 1,
       "category_slug": "mat-ong-du-da-hoa-rung",
       "short_description": "Dung tích 500ml tiết kiệm cho gia đình, thu hoạch từ các cánh rừng nguyên sinh miền Trung, mật vàng nâu tự nhiên ánh trong.",
       "description": "Dòng sản phẩm mật ong dú tự nhiên dung tích 500ml đóng trong chai thủy tinh sẫm màu chống quang hóa. Sản phẩm thu hoạch từ chuỗi trang trại nuôi ong dú sinh thái tại Khánh Hòa và Phú Yên.\n\nƯu điểm nổi bật:\n- 100% mật ong đa hoa tự nhiên từ hoa dại vùng núi, vị chua thanh độc bản.\n- Phương pháp hút mật chân không vi sinh khép kín, không làm dập ấu trùng, bảo tồn đàn ong bền vững.\n- Hỗ trợ tiêu hóa, làm dịu họng tự nhiên.",
@@ -76,8 +84,10 @@
       "review_count": 42
     },
     {
+      "id": 3,
       "name": "Keo Ong Dú Tự Nhiên Nguyên Chất Dạng Giọt (Propolis Tincture 30ml)",
       "slug": "keo-ong-du-propolis-tincture-30ml",
+      "category_id": 2,
       "category_slug": "keo-ong-du-propolis",
       "short_description": "Chiết xuất từ keo ong dú (hỗn hợp nhựa cây và sáp cerumen), chất kháng sinh tự nhiên hỗ trợ tăng đề kháng và giảm rát cổ họng.",
       "description": "Keo ong dú (Stingless Bee Propolis) là thành phần bảo vệ tổ kiên cố của loài ong dú trước mọi loại nấm mốc và vi khuẩn nhiệt đới. Mỗi tổ ong dú trong năm chỉ thu hoạch được khoảng 100–200 gram keo quý.\n\nCông dụng hỗ trợ:\n- Hỗ trợ làm dịu đau rát cổ họng, nhiệt miệng, ho khan.\n- Hỗ trợ tăng cường sức đề kháng và miễn dịch tự nhiên của cơ thể.",
@@ -99,8 +109,10 @@
       "review_count": 67
     },
     {
+      "id": 4,
       "name": "Keo Ong Dú Dạng Xịt Họng Thảo Dược Kháng Khuẩn 20ml",
       "slug": "keo-ong-du-dang-xit-hong-thao-duoc-20ml",
+      "category_id": 2,
       "category_slug": "keo-ong-du-propolis",
       "short_description": "Xịt họng keo ong dú kết hợp tinh dầu bạc hà và tràm gió, thơm mát tức thì, êm dịu vòm họng tiện lợi mang theo.",
       "description": "Bình xịt họng Keo Ong Dú Thảo Dược là giải pháp chăm sóc hệ hô hấp tức thì cho người làm việc văn phòng máy lạnh, giáo viên, người hay giao tiếp.\n\nƯu điểm nổi bật:\n- Đầu vòi phun sương siêu mịn giúp hoạt chất keo ong thẩm thấu đều khắp niêm mạc họng.\n- Hương vị thanh mát, the dịu dễ chịu, không nồng gắt.\n- Chai nhỏ gọn 20ml bỏ túi tiện lợi mang theo mọi lúc mọi nơi.",
@@ -122,8 +134,10 @@
       "review_count": 38
     },
     {
+      "id": 5,
       "name": "Phấn Hoa Ong Dú Tươi Tự Nhiên Bồi Bổ Thể Lực (Hũ 220g)",
       "slug": "phan-hoa-ong-du-tuoi-tu-nhien-220g",
+      "category_id": 3,
       "category_slug": "phan-hoa-sap-cerumen",
       "short_description": "Hạt phấn hoa ong dú vi mô từ các loài hoa dại li ti, giàu protein thực vật, acid amin và vitamin nhóm B bồi bổ cơ thể.",
       "description": "Phấn hoa được các chú ong thợ Tetragonula thu gom từ nhị hoa rừng li ti trong bán kính quanh tổ. Kích thước hạt phấn siêu nhỏ kết hợp với dịch men tiêu hóa của ong tạo nên nguồn dưỡng chất dễ hấp thụ.\n\nCông dụng:\n- Bổ sung dinh dưỡng tự nhiên, hỗ trợ tiêu hóa và phục hồi thể lực.\n- Phù hợp cho người mới ốm dậy, người ăn chay, người lớn tuổi và vận động viên.",
@@ -143,8 +157,10 @@
       "review_count": 26
     },
     {
+      "id": 6,
       "name": "Sáp Tổ Ong Dú Cerumen Thuần Khiết (Khối 100g)",
       "slug": "sap-to-ong-du-cerumen-100g",
+      "category_id": 3,
       "category_slug": "phan-hoa-sap-cerumen",
       "short_description": "Sáp tổ ong dú tự nhiên (Cerumen) kết hợp giữa sáp ong và keo nhựa cây quý, nguyên liệu quý cho chăm sóc da hữu cơ.",
       "description": "Sáp tổ ong dú (Cerumen) được lấy từ cấu trúc tổ tự nhiên của loài ong dú. Với đặc tính dẻo quánh, chứa hàm lượng keo thực vật tự nhiên cao, sáp ong dú là nguyên liệu tuyệt vời trong dưỡng ẩm da, làm dịu vết nứt nẻ và làm mỹ phẩm organic handmade.",
@@ -164,8 +180,10 @@
       "review_count": 19
     },
     {
+      "id": 7,
       "name": "Set Quà Tặng Thượng Phẩm Ong Dú - Tinh Hoa Rừng Nhiệt Đới",
       "slug": "set-qua-tang-thuong-pham-ong-du-tinh-hoa-rung-nhiet-doi",
+      "category_id": 4,
       "category_slug": "combo-qua-tang-suc-khoe",
       "short_description": "Hộp quà cao cấp gồm 01 Chai Mật ong dú 250ml nắp gỗ, 01 Lọ Keo ong Propolis 30ml, 01 Hũ phấn hoa và 01 Gáo lấy mật gỗ dừa nghệ nhân.",
       "description": "Set Quà Tặng Tinh Hoa Ong Dú Việt Nam là sự hòa quyện hoàn hảo giữa giá trị chăm sóc sức khỏe trân quý từ rừng nhiệt đới và tính thẩm mỹ sang trọng, trang nhã.\n\nBộ sản phẩm bao gồm:\n1. 01 Chai Mật ong dú rừng nguyên chất 250ml nắp gỗ khắc laser tinh tế.\n2. 01 Lọ Keo ong dú tự nhiên dạng giọt cô đặc 30ml.\n3. 01 Hũ phấn hoa ong dú sấy lạnh thượng hạng.\n4. 01 Muỗng lấy mật ong chuyên dụng bằng gỗ dừa tự nhiên tiện tay.\n5. Hộp quà cứng cáp kèm thiệp chúc sức khỏe thiết kế độc quyền từ Ong Dú Việt Nam.",
@@ -188,8 +206,10 @@
       "review_count": 73
     },
     {
+      "id": 8,
       "name": "Thùng Nuôi Ong Dú Giống Chuẩn Sinh Thái (Tổ 2 Tầng Thuần Hóa)",
       "slug": "thung-nuoi-ong-du-giong-chuan-sinh-thai",
+      "category_id": 4,
       "category_slug": "combo-qua-tang-suc-khoe",
       "short_description": "Thùng nuôi 2 tầng gỗ tuyết tùng tự nhiên, đã có sẵn đàn ong dú khỏe mạnh sung mãn, chúa tơ đang đẻ và tích lũy mật.",
       "description": "Thùng nuôi ong dú thông minh 2 tầng thiết kế theo tiêu chuẩn nông nghiệp sinh thái hiện đại, dễ dàng mở nắp quan sát và nhân đàn. Đàn ong có khả năng tự kiếm ăn trong bán kính 1km, không cắn đốt, thân thiện với vườn nhà và ban công.",
