@@ -8,77 +8,96 @@ interface HeroSectionProps {
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
   const [isMuted, setIsMuted] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    const video = videoRef.current;
+    const video = document.getElementById('hero-bg-video') as HTMLVideoElement | null;
     if (!video) return;
 
-    // Strict iOS Safari WebKit requirements for reliable autoplay
     video.defaultMuted = true;
     video.muted = true;
-    video.setAttribute('playsinline', 'true');
-    video.setAttribute('webkit-playsinline', 'true');
-    video.setAttribute('muted', 'true');
 
-    const tryPlay = () => {
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch((err) => {
-          // In case iOS Low Power Mode blocks autoplay before user interaction
-          console.warn('[Video Autoplay Notice]:', err);
-        });
-      }
-    };
-
-    tryPlay();
-
-    // Secondary trigger for iOS when user interacts/touches screen
-    const handleFirstTouch = () => {
+    const playVideo = () => {
       if (video.paused) {
-        tryPlay();
+        const p = video.play();
+        if (p !== undefined) {
+          p.catch((err) => {
+            console.warn('[Video Autoplay Notice]:', err);
+          });
+        }
       }
-      window.removeEventListener('touchstart', handleFirstTouch);
-      window.removeEventListener('click', handleFirstTouch);
     };
 
-    window.addEventListener('touchstart', handleFirstTouch, { once: true, passive: true });
-    window.addEventListener('click', handleFirstTouch, { once: true, passive: true });
+    playVideo();
+
+    // Secondary triggers for Mobile / iOS Low Power Mode:
+    // When user touches, scrolls, or switches tabs back, immediately ensure video plays
+    const handleUserInteraction = () => {
+      playVideo();
+      window.removeEventListener('touchstart', handleUserInteraction);
+      window.removeEventListener('touchend', handleUserInteraction);
+      window.removeEventListener('scroll', handleUserInteraction);
+      window.removeEventListener('click', handleUserInteraction);
+    };
+
+    window.addEventListener('touchstart', handleUserInteraction, { passive: true, once: true });
+    window.addEventListener('touchend', handleUserInteraction, { passive: true, once: true });
+    window.addEventListener('scroll', handleUserInteraction, { passive: true, once: true });
+    window.addEventListener('click', handleUserInteraction, { passive: true, once: true });
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        playVideo();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
-      window.removeEventListener('touchstart', handleFirstTouch);
-      window.removeEventListener('click', handleFirstTouch);
+      window.removeEventListener('touchstart', handleUserInteraction);
+      window.removeEventListener('touchend', handleUserInteraction);
+      window.removeEventListener('scroll', handleUserInteraction);
+      window.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 
   const toggleSound = () => {
-    if (videoRef.current) {
+    const video = document.getElementById('hero-bg-video') as HTMLVideoElement | null;
+    if (video) {
       const nextState = !isMuted;
-      videoRef.current.muted = nextState;
+      video.muted = nextState;
       setIsMuted(nextState);
       if (!nextState) {
-        videoRef.current.play().catch(() => {});
+        video.play().catch(() => {});
       }
     }
   };
 
   return (
     <section className="relative min-h-[85vh] lg:min-h-[92vh] flex items-center justify-center pt-28 sm:pt-32 md:pt-36 pb-20 md:pb-28 overflow-hidden text-stone-100">
-      {/* Full Background Video */}
+      {/* Full Background Video Container */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          webkit-playsinline="true"
-          preload="auto"
-          poster="/images/hero-stingless-bee.jpg"
-          className="w-full h-full object-cover"
-        >
-          <source src="/video/ongdu.mp4" type="video/mp4" />
-        </video>
+        <div
+          className="w-full h-full"
+          dangerouslySetInnerHTML={{
+            __html: `
+              <video
+                id="hero-bg-video"
+                autoplay
+                loop
+                muted
+                playsinline
+                webkit-playsinline="true"
+                x5-playsinline="true"
+                preload="auto"
+                poster="/images/hero-stingless-bee.jpg"
+                class="w-full h-full object-cover"
+                style="pointer-events: none;"
+              >
+                <source src="/video/ongdu.mp4" type="video/mp4" />
+              </video>
+            `,
+          }}
+        />
         {/* Soft, light tint to keep video vivid & clear */}
         <div className="absolute inset-0 bg-black/30" />
         {/* Top subtle fade for navbar */}
