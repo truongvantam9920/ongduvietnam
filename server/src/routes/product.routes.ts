@@ -184,9 +184,24 @@ productRouter.patch('/:id/toggle', requireAuth, (req, res) => {
 
   const value = updatedProduct[field as 'is_active' | 'is_featured' | 'in_stock'];
 
+  let friendlyMessage = `Đã cập nhật trạng thái sản phẩm '${updatedProduct.name}'.`;
+  if (field === 'in_stock') {
+    friendlyMessage = value
+      ? `Đã chuyển '${updatedProduct.name}' sang: Còn hàng`
+      : `Đã chuyển '${updatedProduct.name}' sang: Hết hàng`;
+  } else if (field === 'is_featured') {
+    friendlyMessage = value
+      ? `Đã đánh dấu Nổi bật cho '${updatedProduct.name}'`
+      : `Đã bỏ đánh dấu Nổi bật cho '${updatedProduct.name}'`;
+  } else if (field === 'is_active') {
+    friendlyMessage = value
+      ? `Đã hiển thị sản phẩm '${updatedProduct.name}' trên website`
+      : `Đã ẩn sản phẩm '${updatedProduct.name}' khỏi website`;
+  }
+
   res.json({
     success: true,
-    message: `Đã cập nhật trạng thái ${field} thành ${value === 1 ? 'Bật' : 'Tắt'}.`,
+    message: friendlyMessage,
     data: { [field]: value },
   });
 });
