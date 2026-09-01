@@ -21,10 +21,10 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Static files for client/public images & uploads
-const clientPublicImagesPath = path.resolve(process.cwd(), 'client/public/images');
-if (fs.existsSync(clientPublicImagesPath)) {
-  app.use('/images', express.static(clientPublicImagesPath));
+// Static files for client/public assets (images, video, uploads)
+const clientPublicPath = path.resolve(process.cwd(), 'client/public');
+if (fs.existsSync(clientPublicPath)) {
+  app.use(express.static(clientPublicPath));
 }
 app.use('/uploads', express.static(config.uploadDir));
 
