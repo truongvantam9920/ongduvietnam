@@ -33,9 +33,7 @@ export const OrderContactModal: React.FC<OrderContactModalProps> = ({
   const totalPrice = product.price * quantity;
 
   const handleZaloOrder = () => {
-    const text = `Xin chào Ong Dú Việt Nam! Tôi muốn đặt mua:\n- Sản phẩm: ${product.name}\n- Số lượng: ${quantity}\n- Tổng tiền dự kiến: ${formatVND(totalPrice)}\n- Họ tên: ${customerName || '(Chưa nhập)'}\n- SĐT: ${customerPhone || '(Chưa nhập)'}\n- Địa chỉ: ${customerAddress || '(Chưa nhập)'}\n- Ghi chú: ${note || 'Không'}`;
-    const encoded = encodeURIComponent(text);
-    window.open(`https://zalo.me/${zaloNumber}?text=${encoded}`, '_blank');
+    window.open(`https://zalo.me/${zaloNumber}`, '_blank');
     onClose();
   };
 

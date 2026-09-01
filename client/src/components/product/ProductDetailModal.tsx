@@ -223,9 +223,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           <div className="pt-4 border-t border-stone-100 flex flex-col sm:flex-row items-center gap-3">
             {/* Primary Main CTA: Chat & Order via Zalo */}
             <a
-              href={`https://zalo.me/${zaloNumber}?text=${encodeURIComponent(
-                `Xin chào Ong Dú Việt Nam! Tôi muốn tư vấn & đặt mua sản phẩm:\n- ${product.name} (${formatVND(product.price)})\n- Dung tích/Quy cách: ${product.volume || 'Tiêu chuẩn'}`
-              )}`}
+              href={`https://zalo.me/${zaloNumber}`}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:flex-1 py-3.5 px-6 rounded-2xl bg-[#0068FF] hover:bg-[#0058e0] text-white font-bold text-sm shadow-lg shadow-blue-500/25 transition-all flex items-center justify-center gap-2.5 active:scale-[0.98]"
