@@ -46,9 +46,15 @@ const AppContent: React.FC = () => {
 
   const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
 
-  // Load Agentation feedback tool only in local development
+  // Load Agentation feedback tool ONLY on local development (localhost / 127.0.0.1)
   useEffect(() => {
-    if (import.meta.env.DEV) {
+    const isLocalhost =
+      typeof window !== 'undefined' &&
+      (window.location.hostname === 'localhost' ||
+       window.location.hostname === '127.0.0.1' ||
+       window.location.hostname === '[::1]');
+
+    if (isLocalhost && import.meta.env.DEV) {
       import('agentation')
         .then((mod) => {
           setAgentationComponent(() => mod.Agentation);
@@ -117,8 +123,8 @@ const AppContent: React.FC = () => {
         </>
       )}
 
-      {/* Agentation Visual Feedback Toolbar (Development Only) */}
-      {import.meta.env.DEV && AgentationComponent && <AgentationComponent />}
+      {/* Agentation Visual Feedback Toolbar (Localhost Only) */}
+      {AgentationComponent && <AgentationComponent />}
     </div>
   );
 };
