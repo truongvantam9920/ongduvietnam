@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Lock, ShieldCheck, User as UserIcon, Key, ArrowLeft, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Lock, ShieldCheck, User as UserIcon, Key, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../context/AuthContext.js';
 import { useToast } from '../context/ToastContext.js';
 import type { PageRoute } from '../types/index.js';
@@ -9,7 +9,7 @@ interface AdminLoginPageProps {
 }
 
 export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onNavigate }) => {
-  const [username, setUsername] = useState('admin');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
@@ -41,18 +41,13 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onNavigate }) =>
     }
   };
 
-  const handleFillDefaultCredentials = () => {
-    setUsername('admin');
-    setPassword('your_secure_password_here');
-  };
-
   return (
     <div className="min-h-screen pt-24 pb-16 flex items-center justify-center bg-gradient-to-b from-stone-900 via-stone-950 to-black text-stone-200 px-4">
       <div className="w-full max-w-md space-y-6">
         {/* Back to Home Link */}
         <button
           onClick={() => onNavigate('home')}
-          className="inline-flex items-center gap-2 text-xs font-semibold text-stone-400 hover:text-amber-400 transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-semibold text-stone-400 hover:text-amber-400 transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Quay lại trang chủ Website</span>
@@ -65,32 +60,11 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onNavigate }) =>
               <Lock className="w-7 h-7" />
             </div>
             <h1 className="text-2xl font-bold font-serif text-white tracking-tight">
-              Khu Vực Quản Trị Ẩn
+              Đăng Nhập Quản Trị
             </h1>
             <p className="text-xs text-stone-400">
-              Cổng quản lý sản phẩm và danh mục dành cho Quản trị viên Ong Dú Việt Nam.
+              Cổng quản lý sản phẩm và danh mục dành riêng cho Quản trị viên.
             </p>
-          </div>
-
-          {/* Quick Default Credentials Note */}
-          <div className="p-3.5 bg-stone-800/80 rounded-2xl border border-stone-700 text-xs space-y-2">
-            <div className="flex items-center justify-between text-amber-400 font-bold">
-              <span className="flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5" />
-                Tài khoản mặc định:
-              </span>
-              <button
-                type="button"
-                onClick={handleFillDefaultCredentials}
-                className="text-[11px] text-amber-300 hover:text-amber-200 underline font-semibold cursor-pointer"
-              >
-                Tự động điền
-              </button>
-            </div>
-            <div className="text-[11px] text-stone-300 space-y-0.5 font-mono">
-              <div>User: <strong>admin</strong></div>
-              <div>Pass: <strong>your_secure_password_here</strong></div>
-            </div>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
