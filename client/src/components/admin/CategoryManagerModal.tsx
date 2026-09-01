@@ -12,6 +12,19 @@ interface CategoryManagerModalProps {
   onRefresh: () => void;
 }
 
+function slugify(text: string): string {
+  return text
+    .toString()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim()
+    .replace(/đ/g, 'd')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/[\s_-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 export const CategoryManagerModal: React.FC<CategoryManagerModalProps> = ({
   isOpen,
   onClose,
@@ -21,6 +34,7 @@ export const CategoryManagerModal: React.FC<CategoryManagerModalProps> = ({
   const [editingId, setEditingId] = useState<number | null>(null);
   const [name, setName] = useState('');
   const [slug, setSlug] = useState('');
+  const [isSlugManual, setIsSlugManual] = useState(false);
   const [description, setDescription] = useState('');
   const [orderIndex, setOrderIndex] = useState<number>(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -30,6 +44,7 @@ export const CategoryManagerModal: React.FC<CategoryManagerModalProps> = ({
     setEditingId(null);
     setName('');
     setSlug('');
+    setIsSlugManual(false);
     setDescription('');
     setOrderIndex(0);
   };
@@ -38,8 +53,16 @@ export const CategoryManagerModal: React.FC<CategoryManagerModalProps> = ({
     setEditingId(cat.id);
     setName(cat.name);
     setSlug(cat.slug);
+    setIsSlugManual(true);
     setDescription(cat.description || '');
     setOrderIndex(cat.order_index);
+  };
+
+  const handleNameChange = (val: string) => {
+    setName(val);
+    if (!isSlugManual || !slug) {
+      setSlug(slugify(val));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -119,19 +142,36 @@ export const CategoryManagerModal: React.FC<CategoryManagerModalProps> = ({
                 type="text"
                 required
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => handleNameChange(e.target.value)}
                 placeholder="VD: Mật Ong Dú Rừng"
                 className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-stone-700 mb-1">Đường dẫn slug (Tùy chọn):</label>
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-xs font-bold text-stone-700">Đường dẫn slug:</label>
+                {name && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsSlugManual(false);
+                      setSlug(slugify(name));
+                    }}
+                    className="text-[10px] text-amber-700 hover:text-amber-800 font-semibold underline cursor-pointer"
+                  >
+                    Tạo lại tự động
+                  </button>
+                )}
+              </div>
               <input
                 type="text"
                 value={slug}
-                onChange={(e) => setSlug(e.target.value)}
-                placeholder="VD: mat-ong-du-rung"
+                onChange={(e) => {
+                  setIsSlugManual(true);
+                  setSlug(slugify(e.target.value));
+                }}
+                placeholder="Tự động tạo theo tên (VD: mat-ong-du-rung)"
                 className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white"
               />
             </div>
