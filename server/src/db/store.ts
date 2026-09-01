@@ -39,10 +39,7 @@ class JsonStore {
   constructor() {
     const candidates = [
       path.resolve(process.cwd(), 'server/src/data/products.json'),
-      path.resolve(process.cwd(), 'server/data/products.json'),
-      path.resolve(process.cwd(), 'data/products.json'),
       path.resolve(__dirname, '../data/products.json'),
-      path.resolve(__dirname, '../../data/products.json'),
     ];
 
     let found = '';
