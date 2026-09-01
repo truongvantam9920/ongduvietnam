@@ -96,7 +96,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
       setPrice('');
       setOriginalPrice('');
       setVolume('250ml');
-      setImageUrl('https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80');
+      setImageUrl('');
       setAdditionalImages([]);
       setIsFeatured(false);
       setIsActive(true);

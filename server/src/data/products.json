@@ -27,6 +27,14 @@
       "slug": "combo-qua-tang-suc-khoe",
       "description": "Bộ sưu tập quà biếu cao cấp kết hợp mật ong dú rừng, keo ong giọt và phụ kiện gỗ tự nhiên.",
       "order_index": 4
+    },
+    {
+      "id": 5,
+      "name": "Mật ong dú loại 2",
+      "slug": "mat-ong-du-loai-2",
+      "description": "",
+      "order_index": 5,
+      "created_at": "2026-09-01T17:27:15.988Z"
     }
   ],
   "products": [
@@ -54,7 +62,7 @@
       "ingredients": "100% Mật ong dú tự nhiên nguyên chất đa hoa rừng, không pha đường, không qua xử lý nhiệt.",
       "usage_instructions": "Dùng trực tiếp 1–2 thìa cà phê mỗi sáng hoặc pha cùng nước ấm (dưới 40°C).",
       "preservation": "Bảo quản nơi khô ráo thoáng mát hoặc ngăn mát tủ lạnh sau khi mở nắp.",
-      "rating": 5.0,
+      "rating": 5,
       "review_count": 58
     },
     {
@@ -105,7 +113,7 @@
       "ingredients": "Chiết xuất keo ong dú tự nhiên (Propolis) 30%, dung dịch tinh khiết.",
       "usage_instructions": "Nhỏ 3–5 giọt vào 50ml nước ấm khuấy đều và uống, hoặc nhỏ trực tiếp 1–2 giọt vào vòm họng khi thấy ngứa rát cổ.",
       "preservation": "Bảo quản nơi khô ráo thoáng mát, tránh ánh sáng trực tiếp.",
-      "rating": 5.0,
+      "rating": 5,
       "review_count": 67
     },
     {
@@ -202,7 +210,7 @@
       "ingredients": "Mật ong dú tự nhiên, keo ong dú thượng hạng, phấn hoa nguyên chất, phụ kiện gỗ dừa tự nhiên.",
       "usage_instructions": "Món quà ý nghĩa dành tặng cha mẹ, đối tác, thầy cô trong các dịp lễ Tết, tri nân.",
       "preservation": "Bảo quản nơi khô ráo, tránh ánh nắng trực tiếp.",
-      "rating": 5.0,
+      "rating": 5,
       "review_count": 73
     },
     {
@@ -228,8 +236,13 @@
       "ingredients": "Thùng gỗ tự nhiên 2 tầng, đàn ong giống Tetragonula kèm trứng chúa và quân thợ.",
       "usage_instructions": "Đặt nơi râm mát dưới tán cây hoặc hiên nhà, quay cửa tổ về hướng Đông/Đông Nam đón nắng sớm.",
       "preservation": "Tránh ánh nắng gay gắt trực tiếp giữa trưa và nước mưa tạt.",
-      "rating": 5.0,
+      "rating": 5,
       "review_count": 46
     }
-  ]
+  ],
+  "admin": {
+    "username": "admin",
+    "password_hash": "",
+    "email": "contact@ongduvietnam.vn"
+  }
 }
