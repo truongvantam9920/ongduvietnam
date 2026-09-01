@@ -42,8 +42,20 @@ const AppContent: React.FC = () => {
   const [currentRoute, setCurrentRoute] = useState<PageRoute>(() =>
     pathToRoute(window.location.pathname)
   );
+  const [AgentationComponent, setAgentationComponent] = useState<React.ComponentType | null>(null);
 
   const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
+
+  // Load Agentation feedback tool only in local development
+  useEffect(() => {
+    if (import.meta.env.DEV) {
+      import('agentation')
+        .then((mod) => {
+          setAgentationComponent(() => mod.Agentation);
+        })
+        .catch(() => {});
+    }
+  }, []);
 
   // Listen to popstate (browser back/forward)
   useEffect(() => {
@@ -104,6 +116,9 @@ const AppContent: React.FC = () => {
           <FloatingContactBar onNavigate={navigateTo} currentRoute={currentRoute} />
         </>
       )}
+
+      {/* Agentation Visual Feedback Toolbar (Development Only) */}
+      {import.meta.env.DEV && AgentationComponent && <AgentationComponent />}
     </div>
   );
 };
