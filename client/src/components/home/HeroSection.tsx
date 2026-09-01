@@ -8,14 +8,16 @@ interface HeroSectionProps {
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
   const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     let isMounted = true;
-    const video = document.getElementById('hero-bg-video') as HTMLVideoElement | null;
+    const video = videoRef.current;
     if (!video) return;
 
     video.defaultMuted = true;
     video.muted = true;
+    video.volume = 1.0;
 
     const playVideo = () => {
       if (!isMounted) return;
@@ -67,10 +69,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
   }, []);
 
   const toggleSound = () => {
-    const video = document.getElementById('hero-bg-video') as HTMLVideoElement | null;
+    const video = videoRef.current;
     if (video) {
       const nextState = !isMuted;
       video.muted = nextState;
+      video.volume = 1.0;
       setIsMuted(nextState);
       if (!nextState) {
         video.play().catch(() => {});
@@ -82,28 +85,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
     <section className="relative min-h-[85vh] lg:min-h-[92vh] flex items-center justify-center pt-28 sm:pt-32 md:pt-36 pb-20 md:pb-28 overflow-hidden text-stone-100">
       {/* Full Background Video Container */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
-        <div
-          className="w-full h-full"
-          dangerouslySetInnerHTML={{
-            __html: `
-              <video
-                id="hero-bg-video"
-                autoplay
-                loop
-                muted
-                playsinline
-                webkit-playsinline="true"
-                x5-playsinline="true"
-                preload="auto"
-                poster="/images/hero-stingless-bee.jpg"
-                class="w-full h-full object-cover"
-                style="pointer-events: none;"
-              >
-                <source src="/video/ongdu.mp4" type="video/mp4" />
-              </video>
-            `,
-          }}
-        />
+        <video
+          ref={videoRef}
+          id="hero-bg-video"
+          autoPlay
+          loop
+          muted={isMuted}
+          playsInline
+          preload="auto"
+          poster="/images/hero-stingless-bee.jpg"
+          className="w-full h-full object-cover pointer-events-none"
+        >
+          <source src="/video/ongdu.mp4" type="video/mp4" />
+        </video>
         {/* Soft, light tint to keep video vivid & clear */}
         <div className="absolute inset-0 bg-black/30" />
         {/* Top subtle fade for navbar */}
