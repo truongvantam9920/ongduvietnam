@@ -77,7 +77,7 @@ export const Modal: React.FC<ModalProps> = ({
           {!title && (
             <button
               onClick={onClose}
-              className="absolute top-3 right-3 z-10 rounded-full p-2 bg-white/80 text-stone-500 hover:bg-white hover:text-stone-900 shadow-md backdrop-blur-sm transition-colors cursor-pointer"
+              className="absolute top-3.5 right-3.5 z-20 rounded-full p-2 bg-stone-100/90 hover:bg-stone-200 text-stone-600 hover:text-stone-900 shadow-sm backdrop-blur-md transition-all cursor-pointer"
               title="Đóng"
             >
               <X className="w-5 h-5" />

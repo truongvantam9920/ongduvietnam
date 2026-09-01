@@ -103,8 +103,8 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
         {/* Right Column: Product Info & Actions */}
         <div className="md:col-span-7 flex flex-col justify-between space-y-6">
           <div className="space-y-4">
-            {/* Category, Rating, Stock */}
-            <div className="flex flex-wrap items-center justify-between gap-2">
+            {/* Category, Rating, Stock - with clearance for modal close button */}
+            <div className="flex flex-wrap items-center justify-between gap-2 pr-10 sm:pr-12">
               <span className="text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-100/60 px-2.5 py-1 rounded-lg">
                 {product.category_name || 'Mật Ong Dú Tự Nhiên'}
               </span>
