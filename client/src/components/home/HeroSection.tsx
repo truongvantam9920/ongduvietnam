@@ -10,6 +10,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
   const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
+    let isMounted = true;
     const video = document.getElementById('hero-bg-video') as HTMLVideoElement | null;
     if (!video) return;
 
@@ -17,11 +18,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
     video.muted = true;
 
     const playVideo = () => {
+      if (!isMounted) return;
       if (video.paused) {
         const p = video.play();
         if (p !== undefined) {
-          p.catch((err) => {
-            console.warn('[Video Autoplay Notice]:', err);
+          p.catch((err: unknown) => {
+            // Silently ignore normal React unmount AbortErrors
+            if (err instanceof Error && err.name === 'AbortError') {
+              return;
+            }
           });
         }
       }
@@ -45,13 +50,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
     window.addEventListener('click', handleUserInteraction, { passive: true, once: true });
 
     const handleVisibilityChange = () => {
-      if (!document.hidden) {
+      if (!document.hidden && isMounted) {
         playVideo();
       }
     };
     document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
+      isMounted = false;
       window.removeEventListener('touchstart', handleUserInteraction);
       window.removeEventListener('touchend', handleUserInteraction);
       window.removeEventListener('scroll', handleUserInteraction);
