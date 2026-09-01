@@ -10,11 +10,6 @@ import { AdminLoginPage } from './pages/AdminLoginPage.js';
 import { AdminDashboardPage } from './pages/AdminDashboardPage.js';
 import type { PageRoute } from './types/index.js';
 
-// Dynamically loaded in development only; excluded from production bundle
-const DevAgentation = import.meta.env.DEV
-  ? React.lazy(() => import('agentation').then((m) => ({ default: m.Agentation })))
-  : null;
-
 function pathToRoute(path: string): PageRoute {
   const normalized = path.toLowerCase().replace(/\/+$/, '') || '/';
   if (normalized === '/san-pham' || normalized === '/products') {
@@ -108,13 +103,6 @@ const AppContent: React.FC = () => {
           <Footer onNavigate={navigateTo} />
           <FloatingContactBar onNavigate={navigateTo} currentRoute={currentRoute} />
         </>
-      )}
-
-      {/* Agentation Visual Feedback Toolbar (Development Only) */}
-      {import.meta.env.DEV && DevAgentation && (
-        <React.Suspense fallback={null}>
-          <DevAgentation />
-        </React.Suspense>
       )}
     </div>
   );
