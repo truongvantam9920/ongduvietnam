@@ -95,14 +95,16 @@ export function seedDatabase(force = false) {
   ];
 
   const insertCategory = db.prepare(`
-    INSERT INTO categories (name, slug, description, order_index)
-    VALUES (?, ?, ?, ?)
+    INSERT INTO categories (id, name, slug, description, order_index)
+    VALUES (?, ?, ?, ?, ?)
   `);
 
   const categoryMap: Record<string, number> = {};
-  for (const cat of categories) {
-    const result = insertCategory.run(cat.name, cat.slug, cat.description, cat.order_index);
-    categoryMap[cat.slug] = Number(result.lastInsertRowid);
+  for (const cat of (jsonCatalog?.categories || categories)) {
+    const result = insertCategory.run(cat.id || null, cat.name, cat.slug, cat.description || '', cat.order_index || 0);
+    const assignedId = cat.id || Number(result.lastInsertRowid);
+    categoryMap[cat.slug] = assignedId;
+    categoryMap[String(assignedId)] = assignedId;
   }
 
   // 3. Insert Products
@@ -330,12 +332,12 @@ Bộ sản phẩm bao gồm:
 
   const insertProduct = db.prepare(`
     INSERT INTO products (
-      name, slug, category_id, short_description, description,
+      id, name, slug, category_id, short_description, description,
       price, original_price, volume, image_url, additional_images,
       is_featured, is_active, in_stock, origin, ingredients,
       usage_instructions, preservation, rating, review_count
     ) VALUES (
-      ?, ?, ?, ?, ?,
+      ?, ?, ?, ?, ?, ?,
       ?, ?, ?, ?, ?,
       ?, ?, ?, ?, ?,
       ?, ?, ?, ?
@@ -349,6 +351,7 @@ Bộ sản phẩm bao gồm:
       : (typeof prod.additional_images === 'string' ? prod.additional_images : '[]');
 
     insertProduct.run(
+      prod.id || null,
       prod.name,
       prod.slug,
       categoryId,
