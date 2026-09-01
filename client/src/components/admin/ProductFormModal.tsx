@@ -369,16 +369,16 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
                 )}
               </div>
 
-              {/* Upload & Direct URL for Main Image */}
-              <div className="flex-1 space-y-2.5 w-full">
+              {/* Upload for Main Image */}
+              <div className="flex-1 space-y-2 w-full">
                 <div className="flex flex-wrap items-center gap-2">
                   <label
-                    className={`cursor-pointer inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs transition-colors shadow-xs ${
+                    className={`cursor-pointer inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs transition-colors shadow-xs ${
                       isUploadingMain ? 'opacity-50 pointer-events-none' : ''
                     }`}
                   >
-                    <Upload className="w-3.5 h-3.5" />
-                    <span>{imageUrl ? 'Đổi ảnh' : 'Tải ảnh lên'}</span>
+                    <Upload className="w-4 h-4" />
+                    <span>{imageUrl ? 'Đổi ảnh đại diện' : 'Tải ảnh đại diện lên'}</span>
                     <input
                       type="file"
                       accept="image/*"
@@ -389,15 +389,12 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
                   </label>
                   <span className="text-[11px] text-stone-500">JPG, PNG, WebP (Tối đa 10MB)</span>
                 </div>
-
-                <input
-                  type="text"
-                  required
-                  value={imageUrl}
-                  onChange={(e) => setImageUrl(e.target.value)}
-                  placeholder="Hoặc dán URL ảnh trực tiếp (https://...)"
-                  className="w-full px-3.5 py-2 rounded-xl border border-stone-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 text-xs outline-hidden"
-                />
+                {imageUrl && (
+                  <div className="text-[11px] text-emerald-700 font-medium flex items-center gap-1.5 truncate">
+                    <Check className="w-3.5 h-3.5 shrink-0" />
+                    <span className="truncate">{imageUrl}</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>

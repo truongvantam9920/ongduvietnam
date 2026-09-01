@@ -56,14 +56,15 @@
         "/images/hero-stingless-bee.jpg"
       ],
       "is_featured": 1,
-      "is_active": 1,
-      "in_stock": 1,
+      "is_active": 0,
+      "in_stock": 0,
       "origin": "Vườn sinh thái Cam Lâm, Khánh Hòa",
       "ingredients": "100% Mật ong dú tự nhiên nguyên chất đa hoa rừng, không pha đường, không qua xử lý nhiệt.",
       "usage_instructions": "Dùng trực tiếp 1–2 thìa cà phê mỗi sáng hoặc pha cùng nước ấm (dưới 40°C).",
       "preservation": "Bảo quản nơi khô ráo thoáng mát hoặc ngăn mát tủ lạnh sau khi mở nắp.",
       "rating": 5,
-      "review_count": 58
+      "review_count": 58,
+      "updated_at": "2026-09-01T17:30:40.936Z"
     },
     {
       "id": 2,
