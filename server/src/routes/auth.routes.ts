@@ -1,10 +1,9 @@
 import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { db } from '../db/database.js';
+import { store } from '../db/store.js';
 import { config } from '../config.js';
 import { requireAuth, type AuthRequest } from '../middleware/auth.js';
-import type { User } from '../types/index.js';
 
 export const authRouter = Router();
 
@@ -20,9 +19,9 @@ authRouter.post('/login', (req, res) => {
     return;
   }
 
-  const user = db.prepare('SELECT * FROM users WHERE username = ?').get(username) as User | undefined;
+  const admin = store.getAdminUser();
 
-  if (!user) {
+  if (username !== admin.username) {
     res.status(401).json({
       success: false,
       message: 'Tên đăng nhập hoặc mật khẩu không chính xác.',
@@ -30,7 +29,7 @@ authRouter.post('/login', (req, res) => {
     return;
   }
 
-  const isPasswordValid = bcrypt.compareSync(password, user.password_hash);
+  const isPasswordValid = bcrypt.compareSync(password, admin.password_hash);
   if (!isPasswordValid) {
     res.status(401).json({
       success: false,
@@ -42,9 +41,9 @@ authRouter.post('/login', (req, res) => {
   // Generate JWT token
   const token = jwt.sign(
     {
-      id: user.id,
-      username: user.username,
-      role: user.role,
+      id: admin.id,
+      username: admin.username,
+      role: admin.role,
     },
     config.jwtSecret,
     { expiresIn: config.jwtExpiresIn as jwt.SignOptions['expiresIn'] }
@@ -55,10 +54,10 @@ authRouter.post('/login', (req, res) => {
     message: 'Đăng nhập trang quản trị thành công.',
     token,
     user: {
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      role: user.role,
+      id: admin.id,
+      username: admin.username,
+      email: admin.email,
+      role: admin.role,
     },
   });
 });
@@ -91,24 +90,9 @@ authRouter.post('/change-password', requireAuth, (req: AuthRequest, res) => {
     return;
   }
 
-  if (!req.user) {
-    res.status(401).json({
-      success: false,
-      message: 'Chưa xác thực người dùng.',
-    });
-    return;
-  }
+  const admin = store.getAdminUser();
 
-  const user = db.prepare('SELECT * FROM users WHERE id = ?').get(req.user.id) as User | undefined;
-  if (!user) {
-    res.status(404).json({
-      success: false,
-      message: 'Không tìm thấy tài khoản người dùng.',
-    });
-    return;
-  }
-
-  const isCurrentPasswordValid = bcrypt.compareSync(currentPassword, user.password_hash);
+  const isCurrentPasswordValid = bcrypt.compareSync(currentPassword, admin.password_hash);
   if (!isCurrentPasswordValid) {
     res.status(400).json({
       success: false,
@@ -120,11 +104,11 @@ authRouter.post('/change-password', requireAuth, (req: AuthRequest, res) => {
   const salt = bcrypt.genSaltSync(10);
   const newHash = bcrypt.hashSync(newPassword, salt);
 
-  db.prepare('UPDATE users SET password_hash = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?')
-    .run(newHash, user.id);
+  store.updateAdminPassword(newHash);
 
   res.json({
     success: true,
     message: 'Đổi mật khẩu quản trị viên thành công.',
   });
 });
+

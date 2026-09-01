@@ -10,8 +10,8 @@ const server = app.listen(config.port, () => {
   console.log(`=================================================`);
   console.log(`🐝 Ong Dú Việt Nam - Monolith Server`);
   console.log(`🚀 API Server running at: http://localhost:${config.port}`);
-  console.log(`📦 Database path: ${config.dbPath}`);
-  console.log(`☁️  Cloudflare R2: ${config.r2.isConfigured ? `Configured (Bucket: ${config.r2.bucketName})` : 'Local Fallback'}`);
+  console.log(`📦 Data Store: Pure JSON Catalog (/server/src/data/products.json)`);
+  console.log(`📁 Uploads: Local Storage (/client/public/images/uploads)`);
   console.log(`🌐 Mode: ${config.nodeEnv}`);
   console.log(`=================================================`);
   try {

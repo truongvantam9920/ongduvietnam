@@ -4,8 +4,8 @@ export interface User {
   password_hash: string;
   email: string | null;
   role: string;
-  created_at: string;
-  updated_at: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface UserSanitized {
@@ -21,7 +21,7 @@ export interface Category {
   slug: string;
   description: string | null;
   order_index: number;
-  created_at: string;
+  created_at?: string;
   product_count?: number;
 }
 
@@ -38,7 +38,7 @@ export interface Product {
   original_price: number | null;
   volume: string | null;
   image_url: string;
-  additional_images: string | null; // JSON string
+  additional_images: string[] | string | null;
   is_featured: number; // 0 or 1
   is_active: number; // 0 or 1
   in_stock: number; // 0 or 1
@@ -48,8 +48,8 @@ export interface Product {
   preservation: string | null;
   rating: number;
   review_count: number;
-  created_at: string;
-  updated_at: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface ProductCreateInput {

@@ -3,8 +3,6 @@ import cors from 'cors';
 import path from 'node:path';
 import fs from 'node:fs';
 import { config } from './config.js';
-import { initDatabase } from './db/database.js';
-import { seedDatabase } from './db/seed.js';
 import { authRouter } from './routes/auth.routes.js';
 import { productRouter } from './routes/product.routes.js';
 import { categoryRouter } from './routes/category.routes.js';
@@ -13,14 +11,6 @@ import { errorHandler } from './middleware/errorHandler.js';
 
 // Initialize Express App
 export const app = express();
-
-// Initialize Database & Seed if empty
-try {
-  initDatabase();
-  seedDatabase(false);
-} catch (err) {
-  console.error('[Database Init Error]:', err);
-}
 
 // Middlewares
 app.use(cors({
@@ -31,17 +21,16 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Static files for uploaded images (local fallback)
+// Static files for uploaded images
 app.use('/uploads', express.static(config.uploadDir));
 
 // API Health check
 app.get('/api/health', (_req, res) => {
   res.json({
     status: 'ok',
-    app: 'Ong Dú Việt Nam API',
+    app: 'Ong Dú Việt Nam API (Pure JSON Store)',
     timestamp: new Date().toISOString(),
     env: config.nodeEnv,
-    r2Configured: config.r2.isConfigured,
   });
 });
 

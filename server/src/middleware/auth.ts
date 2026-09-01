@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { config } from '../config.js';
-import { db } from '../db/database.js';
+import { store } from '../db/store.js';
 import type { UserSanitized } from '../types/index.js';
 
 export interface AuthRequest extends Request {
@@ -27,9 +27,8 @@ export function requireAuth(req: AuthRequest, res: Response, next: NextFunction)
       role: string;
     };
 
-    // Verify user still exists in database
-    const user = db.prepare('SELECT id, username, email, role FROM users WHERE id = ?').get(decoded.id) as UserSanitized | undefined;
-    if (!user) {
+    const admin = store.getAdminUser();
+    if (!admin || admin.username !== decoded.username) {
       res.status(401).json({
         success: false,
         message: 'Tài khoản không tồn tại hoặc đã bị xóa.',
@@ -37,7 +36,12 @@ export function requireAuth(req: AuthRequest, res: Response, next: NextFunction)
       return;
     }
 
-    req.user = user;
+    req.user = {
+      id: admin.id,
+      username: admin.username,
+      email: admin.email,
+      role: admin.role,
+    };
     next();
   } catch (error) {
     res.status(401).json({

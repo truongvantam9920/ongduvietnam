@@ -14,7 +14,6 @@
     "build:client": "vite build",
     "build:server": "tsc -p server/tsconfig.json",
     "start": "node dist/server/index.js",
-    "seed": "tsx server/src/db/seed.ts",
     "hash": "tsx scripts/hash-password.ts"
   },
   "keywords": [
@@ -30,7 +29,6 @@
   "author": "Ong Dú Việt Nam",
   "license": "ISC",
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.1116.0",
     "agentation": "^3.0.2",
     "bcryptjs": "^3.0.3",
     "clsx": "^2.1.1",
