@@ -52,20 +52,24 @@ export const AdminStats: React.FC<AdminStatsProps> = ({ stats, isLoading }) => {
   ];
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-4">
       {items.map((item, idx) => {
         const Icon = item.icon;
         return (
           <div
             key={idx}
-            className="bg-white p-5 rounded-2xl border border-stone-200/80 shadow-xs flex items-center gap-4"
+            className="bg-white p-3.5 sm:p-5 rounded-2xl border border-stone-200/80 shadow-xs flex items-center gap-3 sm:gap-4"
           >
-            <div className={`p-3 rounded-xl border ${item.color} shrink-0`}>
-              <Icon className="w-5 h-5" />
+            <div className={`p-2 sm:p-3 rounded-xl border ${item.color} shrink-0`}>
+              <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <span className="text-xs text-stone-500 font-medium block">{item.label}</span>
-              <span className="text-xl font-bold text-stone-900 font-serif">{item.value}</span>
+            <div className="min-w-0">
+              <span className="text-[11px] sm:text-xs text-stone-500 font-medium block truncate">
+                {item.label}
+              </span>
+              <span className="text-lg sm:text-xl font-bold text-stone-900 font-serif">
+                {item.value}
+              </span>
             </div>
           </div>
         );
