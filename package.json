@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "concurrently -k -n \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"npm run dev:server\" \"npm run dev:client\"",
-    "dev:server": "tsx watch server/src/index.ts",
+    "dev:server": "tsx watch --ignore 'server/src/data/**' --ignore 'client/public/images/**' server/src/index.ts",
     "dev:client": "vite",
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build",

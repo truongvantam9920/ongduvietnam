@@ -17,6 +17,9 @@ export default defineConfig({
   },
   server: {
     port: 3000,
+    watch: {
+      ignored: ['**/server/src/data/**', '**/server/data/**', '**/data/**', '**/client/public/images/**'],
+    },
     proxy: {
       '/api': {
         target: 'http://localhost:5050',
