@@ -44,7 +44,7 @@ const AppContent: React.FC = () => {
     pathToRoute(window.location.pathname)
   );
 
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
 
   // Listen to popstate (browser back/forward)
   useEffect(() => {
@@ -63,12 +63,16 @@ const AppContent: React.FC = () => {
     }
   };
 
-  // If user accesses /admin when logged in, redirect to admin-dashboard
+  // Route security & auto-redirects
   useEffect(() => {
+    if (isAuthLoading) return;
+
     if (currentRoute === 'admin-login' && isAuthenticated) {
       navigateTo('admin-dashboard');
+    } else if (currentRoute === 'admin-dashboard' && !isAuthenticated) {
+      navigateTo('admin-login');
     }
-  }, [currentRoute, isAuthenticated]);
+  }, [currentRoute, isAuthenticated, isAuthLoading]);
 
   const isAdminRoute = currentRoute === 'admin-login' || currentRoute === 'admin-dashboard';
 
@@ -82,7 +86,17 @@ const AppContent: React.FC = () => {
         {currentRoute === 'home' && <HomePage onNavigate={navigateTo} />}
         {currentRoute === 'products' && <ProductsPage onNavigate={navigateTo} />}
         {currentRoute === 'admin-login' && <AdminLoginPage onNavigate={navigateTo} />}
-        {currentRoute === 'admin-dashboard' && <AdminDashboardPage onNavigate={navigateTo} />}
+        {currentRoute === 'admin-dashboard' && (
+          isAuthLoading ? (
+            <div className="min-h-[70vh] flex items-center justify-center">
+              <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-amber-500"></div>
+            </div>
+          ) : isAuthenticated ? (
+            <AdminDashboardPage onNavigate={navigateTo} />
+          ) : (
+            <AdminLoginPage onNavigate={navigateTo} />
+          )
+        )}
       </main>
 
       {!isAdminRoute && (

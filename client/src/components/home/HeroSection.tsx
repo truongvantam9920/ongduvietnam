@@ -14,9 +14,41 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
     const video = videoRef.current;
     if (!video) return;
 
-    // Start video muted for smooth autoplay
+    // Strict iOS Safari WebKit requirements for reliable autoplay
+    video.defaultMuted = true;
     video.muted = true;
-    video.play().catch(() => {});
+    video.setAttribute('playsinline', 'true');
+    video.setAttribute('webkit-playsinline', 'true');
+    video.setAttribute('muted', 'true');
+
+    const tryPlay = () => {
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          // In case iOS Low Power Mode blocks autoplay before user interaction
+          console.warn('[Video Autoplay Notice]:', err);
+        });
+      }
+    };
+
+    tryPlay();
+
+    // Secondary trigger for iOS when user interacts/touches screen
+    const handleFirstTouch = () => {
+      if (video.paused) {
+        tryPlay();
+      }
+      window.removeEventListener('touchstart', handleFirstTouch);
+      window.removeEventListener('click', handleFirstTouch);
+    };
+
+    window.addEventListener('touchstart', handleFirstTouch, { once: true, passive: true });
+    window.addEventListener('click', handleFirstTouch, { once: true, passive: true });
+
+    return () => {
+      window.removeEventListener('touchstart', handleFirstTouch);
+      window.removeEventListener('click', handleFirstTouch);
+    };
   }, []);
 
   const toggleSound = () => {
@@ -36,13 +68,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
         <video
           ref={videoRef}
-          src="/video/ongdu.mp4"
           autoPlay
           loop
           muted
           playsInline
+          webkit-playsinline="true"
+          preload="auto"
+          poster="/images/hero-stingless-bee.jpg"
           className="w-full h-full object-cover"
-        />
+        >
+          <source src="/video/ongdu.mp4" type="video/mp4" />
+        </video>
         {/* Soft, light tint to keep video vivid & clear */}
         <div className="absolute inset-0 bg-black/30" />
         {/* Top subtle fade for navbar */}
