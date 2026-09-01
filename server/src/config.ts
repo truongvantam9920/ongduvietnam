@@ -18,8 +18,8 @@ export const config = {
     passwordHash: process.env.ADMIN_PASSWORD_HASH || '',
     email: process.env.ADMIN_EMAIL || 'admin@ongduvietnam.vn',
   },
-  dbPath: process.env.DATABASE_PATH || path.resolve(process.cwd(), 'data/ongdu.sqlite'),
-  uploadDir: path.resolve(process.cwd(), 'uploads'),
+  dbPath: process.env.DATABASE_PATH || (process.env.VERCEL ? '/tmp/ongdu.sqlite' : path.resolve(process.cwd(), 'data/ongdu.sqlite')),
+  uploadDir: process.env.VERCEL ? '/tmp/uploads' : path.resolve(process.cwd(), 'uploads'),
 
   // Cloudflare R2 Object Storage
   r2: {

@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Website giới thiệu sản phẩm Ong Dú Việt Nam - Mật ong dú và chế phẩm ong dú thiên nhiên cao cấp",
   "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "dev": "concurrently -k -n \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "tsx watch server/src/index.ts",
