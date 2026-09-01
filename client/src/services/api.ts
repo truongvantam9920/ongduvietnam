@@ -203,5 +203,17 @@ export const api = {
       body: formData,
     });
   },
+
+  // JSON Catalog Export & Import
+  async exportData(): Promise<{ success: boolean; data: { exported_at: string; categories: Category[]; products: Product[] } }> {
+    return fetchJson('/products/admin/export-data');
+  },
+
+  async importData(data: { categories: any[]; products: any[] }): Promise<{ success: boolean; message: string }> {
+    return fetchJson('/products/admin/import-data', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
 };
 

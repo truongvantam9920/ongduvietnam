@@ -24,7 +24,7 @@ pnpm-debug.log*
 .env.production.local
 
 # Database
-data/
+/data/
 *.sqlite
 *.sqlite-journal
 *.sqlite3

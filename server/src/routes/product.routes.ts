@@ -457,3 +457,123 @@ productRouter.delete('/:id', requireAuth, (req, res) => {
     message: `Đã xóa sản phẩm '${existing.name}' thành công.`,
   });
 });
+
+// GET /api/products/admin/export - Export entire database catalog as JSON
+productRouter.get('/admin/export-data', requireAuth, (_req, res) => {
+  try {
+    const categories = db.prepare('SELECT * FROM categories ORDER BY order_index ASC, id ASC').all();
+    const products = db.prepare('SELECT p.*, c.slug as category_slug FROM products p LEFT JOIN categories c ON c.id = p.category_id ORDER BY p.id ASC').all();
+
+    const formattedProducts = products.map((p: any) => {
+      let addImages = [];
+      try {
+        addImages = p.additional_images ? JSON.parse(p.additional_images) : [];
+      } catch {
+        addImages = [];
+      }
+      return {
+        ...p,
+        additional_images: addImages,
+      };
+    });
+
+    res.json({
+      success: true,
+      data: {
+        exported_at: new Date().toISOString(),
+        categories,
+        products: formattedProducts,
+      },
+    });
+  } catch (err: unknown) {
+    res.status(500).json({
+      success: false,
+      message: err instanceof Error ? err.message : 'Lỗi khi xuất dữ liệu JSON.',
+    });
+  }
+});
+
+// POST /api/products/admin/import - Import entire database catalog from JSON
+productRouter.post('/admin/import-data', requireAuth, (req, res) => {
+  try {
+    const { categories, products } = req.body;
+
+    if (!Array.isArray(categories) || !Array.isArray(products)) {
+      res.status(400).json({
+        success: false,
+        message: 'Dữ liệu JSON không đúng định dạng. Cần chứa mảng "categories" và "products".',
+      });
+      return;
+    }
+
+    db.exec('DELETE FROM products;');
+    db.exec('DELETE FROM categories;');
+
+    const insertCategory = db.prepare(`
+      INSERT INTO categories (name, slug, description, order_index)
+      VALUES (?, ?, ?, ?)
+    `);
+
+    const categoryMap: Record<string, number> = {};
+    for (const cat of categories) {
+      const result = insertCategory.run(cat.name, cat.slug, cat.description || '', cat.order_index || 0);
+      categoryMap[cat.slug] = Number(result.lastInsertRowid);
+      if (cat.id) {
+        categoryMap[String(cat.id)] = Number(result.lastInsertRowid);
+      }
+    }
+
+    const insertProduct = db.prepare(`
+      INSERT INTO products (
+        name, slug, category_id, short_description, description,
+        price, original_price, volume, image_url, additional_images,
+        is_featured, is_active, in_stock, origin, ingredients,
+        usage_instructions, preservation, rating, review_count
+      ) VALUES (
+        ?, ?, ?, ?, ?,
+        ?, ?, ?, ?, ?,
+        ?, ?, ?, ?, ?,
+        ?, ?, ?, ?
+      )
+    `);
+
+    for (const prod of products) {
+      const categoryId = categoryMap[prod.category_slug] || categoryMap[String(prod.category_id)] || null;
+      const additionalImagesStr = Array.isArray(prod.additional_images)
+        ? JSON.stringify(prod.additional_images)
+        : (prod.additional_images || '[]');
+
+      insertProduct.run(
+        prod.name,
+        prod.slug || slugify(prod.name),
+        categoryId,
+        prod.short_description || '',
+        prod.description || '',
+        prod.price || 0,
+        prod.original_price || null,
+        prod.volume || '',
+        prod.image_url || '/images/product-honey-bottle.jpg',
+        additionalImagesStr,
+        prod.is_featured ? 1 : 0,
+        prod.is_active !== undefined ? (prod.is_active ? 1 : 0) : 1,
+        prod.in_stock !== undefined ? (prod.in_stock ? 1 : 0) : 1,
+        prod.origin || 'Việt Nam',
+        prod.ingredients || '',
+        prod.usage_instructions || '',
+        prod.preservation || '',
+        prod.rating || 5.0,
+        prod.review_count || 0
+      );
+    }
+
+    res.json({
+      success: true,
+      message: `Đã nạp thành công ${categories.length} danh mục và ${products.length} sản phẩm từ file JSON!`,
+    });
+  } catch (err: unknown) {
+    res.status(500).json({
+      success: false,
+      message: err instanceof Error ? err.message : 'Lỗi khi nạp dữ liệu JSON.',
+    });
+  }
+});

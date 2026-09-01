@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import bcrypt from 'bcryptjs';
 import { db, initDatabase } from './database.js';
 import { config } from '../config.js';
@@ -41,6 +43,27 @@ export function seedDatabase(force = false) {
   if (force) {
     db.exec('DELETE FROM products;');
     db.exec('DELETE FROM categories;');
+  }
+
+  // Check if products.json exists
+  const candidates = [
+    path.resolve(process.cwd(), 'server/src/data/products.json'),
+    path.resolve(process.cwd(), 'server/data/products.json'),
+    path.resolve(process.cwd(), 'data/products.json'),
+    path.resolve(__dirname, '../data/products.json'),
+    path.resolve(__dirname, '../../data/products.json'),
+  ];
+  let jsonCatalog: { categories: any[]; products: any[] } | null = null;
+  for (const p of candidates) {
+    if (fs.existsSync(p)) {
+      try {
+        jsonCatalog = JSON.parse(fs.readFileSync(p, 'utf-8'));
+        console.log(`[Seed] Loaded catalog directly from JSON: ${p}`);
+        break;
+      } catch {
+        // fallback
+      }
+    }
   }
 
   // 2. Insert Categories
@@ -319,31 +342,36 @@ Bộ sản phẩm bao gồm:
     )
   `);
 
-  for (const prod of products) {
+  for (const prod of (jsonCatalog?.products || products)) {
+    const categoryId = prod.category_id || categoryMap[prod.category_slug] || null;
+    const additionalImagesStr = Array.isArray(prod.additional_images)
+      ? JSON.stringify(prod.additional_images)
+      : (typeof prod.additional_images === 'string' ? prod.additional_images : '[]');
+
     insertProduct.run(
       prod.name,
       prod.slug,
-      prod.category_id,
+      categoryId,
       prod.short_description,
       prod.description,
       prod.price,
       prod.original_price,
       prod.volume,
       prod.image_url,
-      prod.additional_images,
-      prod.is_featured,
-      prod.is_active,
-      prod.in_stock,
-      prod.origin,
-      prod.ingredients,
-      prod.usage_instructions,
-      prod.preservation,
-      prod.rating,
-      prod.review_count
+      additionalImagesStr,
+      prod.is_featured !== undefined ? (prod.is_featured ? 1 : 0) : 0,
+      prod.is_active !== undefined ? (prod.is_active ? 1 : 0) : 1,
+      prod.in_stock !== undefined ? (prod.in_stock ? 1 : 0) : 1,
+      prod.origin || 'Việt Nam',
+      prod.ingredients || '',
+      prod.usage_instructions || '',
+      prod.preservation || '',
+      prod.rating || 5.0,
+      prod.review_count || 0
     );
   }
 
-  console.log(`[Seed] Seeded ${categories.length} categories and ${products.length} products successfully.`);
+  console.log(`[Seed] Seeded ${categories.length} categories and ${(jsonCatalog?.products || products).length} products successfully.`);
 }
 
 // Auto seed when executed directly via CLI

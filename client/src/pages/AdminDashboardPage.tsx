@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   Package, Plus, FolderTree, Search, Filter, RefreshCw,
   Edit2, Trash2, Eye, EyeOff, Sparkles, CheckCircle2,
-  XCircle, LogOut, Key, Globe, ExternalLink
+  XCircle, LogOut, Key, Globe, ExternalLink, Download, Upload
 } from 'lucide-react';
 import type { Product, Category, AdminStats as AdminStatsType, PageRoute } from '../types/index.js';
 import { api } from '../services/api.js';
@@ -22,6 +22,7 @@ interface AdminDashboardPageProps {
 export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNavigate }) => {
   const { user, logout, isAuthenticated } = useAuth();
   const { success, error } = useToast();
+  const importFileRef = useRef<HTMLInputElement>(null);
 
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -115,6 +116,48 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
     }
   };
 
+  // Export JSON catalog
+  const handleExportJSON = async () => {
+    try {
+      const res = await api.exportData();
+      if (res.success && res.data) {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(res.data, null, 2));
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", `ongdu_products_${new Date().toISOString().slice(0, 10)}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+        success('Đã xuất file dữ liệu JSON thành công!');
+      }
+    } catch (err: unknown) {
+      error(err instanceof Error ? err.message : 'Không thể xuất dữ liệu JSON.');
+    }
+  };
+
+  // Import JSON catalog
+  const handleImportJSON = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      try {
+        const content = event.target?.result as string;
+        const parsed = JSON.parse(content);
+        const res = await api.importData(parsed);
+        if (res.success) {
+          success(res.message);
+          loadData();
+        }
+      } catch (err: unknown) {
+        error(err instanceof Error ? err.message : 'File JSON không hợp lệ.');
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  };
+
   // Filtered products on client side
   const filteredProducts = products.filter((product) => {
     if (selectedCategory && String(product.category_id) !== selectedCategory && product.category_slug !== selectedCategory) {
@@ -138,6 +181,15 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
 
   return (
     <div className="min-h-screen bg-stone-100 text-stone-800 pb-20">
+      {/* Hidden file input for JSON import */}
+      <input
+        type="file"
+        ref={importFileRef}
+        accept=".json,application/json"
+        onChange={handleImportJSON}
+        className="hidden"
+      />
+
       {/* Top Admin Navbar */}
       <header className="bg-stone-900 text-white sticky top-0 z-30 shadow-md border-b border-stone-800">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3">
@@ -201,13 +253,13 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
         {/* 2. Management Toolbar */}
         <div className="bg-white p-4 sm:p-6 rounded-3xl border border-stone-200 shadow-xs space-y-3.5">
           {/* Action Buttons Row */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <button
               onClick={() => {
                 setProductToEdit(null);
                 setIsProductModalOpen(true);
               }}
-              className="flex-1 px-3 sm:px-5 py-2.5 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-700 hover:to-amber-600 text-white font-bold text-xs rounded-xl shadow-md shadow-amber-500/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-95"
+              className="flex-1 sm:flex-none px-3.5 sm:px-5 py-2.5 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-700 hover:to-amber-600 text-white font-bold text-xs rounded-xl shadow-md shadow-amber-500/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-95"
             >
               <Plus className="w-4 h-4 shrink-0" />
               <span className="truncate">Thêm Sản Phẩm</span>
@@ -215,10 +267,28 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
 
             <button
               onClick={() => setIsCategoryModalOpen(true)}
-              className="flex-1 px-3 sm:px-4 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-800 font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer active:scale-95"
+              className="flex-1 sm:flex-none px-3.5 sm:px-4 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-800 font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer active:scale-95"
             >
               <FolderTree className="w-4 h-4 text-amber-700 shrink-0" />
               <span className="truncate">Danh Mục</span>
+            </button>
+
+            <button
+              onClick={handleExportJSON}
+              className="px-3 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+              title="Xuất file JSON sao lưu toàn bộ sản phẩm & danh mục"
+            >
+              <Download className="w-4 h-4 text-emerald-700 shrink-0" />
+              <span className="hidden sm:inline">Xuất JSON</span>
+            </button>
+
+            <button
+              onClick={() => importFileRef.current?.click()}
+              className="px-3 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+              title="Nạp dữ liệu từ file JSON"
+            >
+              <Upload className="w-4 h-4 text-blue-700 shrink-0" />
+              <span className="hidden sm:inline">Nhập JSON</span>
             </button>
 
             <button
