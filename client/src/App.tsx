@@ -106,8 +106,8 @@ const AppContent: React.FC = () => {
         </>
       )}
 
-      {/* Agentation Visual Feedback Toolbar */}
-      <Agentation />
+      {/* Agentation Visual Feedback Toolbar (Development Only) */}
+      {import.meta.env.DEV && <Agentation />}
     </div>
   );
 };
