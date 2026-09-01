@@ -120,10 +120,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             </h2>
 
             {/* Price Box */}
-            <div className="p-4 bg-gradient-to-r from-amber-50 to-orange-50/50 rounded-2xl border border-amber-200/80 flex items-baseline justify-between">
+            <div className="p-4 bg-gradient-to-r from-amber-50 to-orange-50/50 rounded-2xl border border-amber-200/80 flex flex-col sm:flex-row sm:items-baseline justify-between gap-3">
               <div>
                 <span className="text-xs text-stone-500 block mb-0.5">Giá sản phẩm:</span>
-                <div className="flex items-baseline gap-3">
+                <div className="flex flex-wrap items-baseline gap-2.5">
                   <span className="text-2xl sm:text-3xl font-extrabold text-amber-700 font-serif">
                     {formatVND(product.price)}
                   </span>
@@ -136,7 +136,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               </div>
 
               {product.volume && (
-                <div className="text-right">
+                <div className="text-left sm:text-right pt-2 sm:pt-0 border-t sm:border-t-0 border-amber-200/60">
                   <span className="text-[11px] text-stone-500 block">Dung tích / Quy cách:</span>
                   <span className="text-sm font-bold text-stone-800">{product.volume}</span>
                 </div>
