@@ -371,14 +371,14 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
 
               {/* Upload & Direct URL for Main Image */}
               <div className="flex-1 space-y-2.5 w-full">
-                <div className="flex flex-wrap items-center gap-2.5">
+                <div className="flex flex-wrap items-center gap-2">
                   <label
-                    className={`cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs transition-colors shadow-xs ${
+                    className={`cursor-pointer inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs transition-colors shadow-xs ${
                       isUploadingMain ? 'opacity-50 pointer-events-none' : ''
                     }`}
                   >
                     <Upload className="w-3.5 h-3.5" />
-                    <span>{imageUrl ? 'Đổi ảnh từ máy tính' : 'Chọn ảnh từ máy tính để tải lên'}</span>
+                    <span>{imageUrl ? 'Đổi ảnh' : 'Tải ảnh lên'}</span>
                     <input
                       type="file"
                       accept="image/*"
@@ -387,7 +387,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
                       className="hidden"
                     />
                   </label>
-                  <span className="text-[11px] text-stone-500">Hỗ trợ: JPG, PNG, WebP (Tối đa 10MB)</span>
+                  <span className="text-[11px] text-stone-500">JPG, PNG, WebP (Tối đa 10MB)</span>
                 </div>
 
                 <input
@@ -406,29 +406,29 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
           <div className="border-t border-stone-200 pt-3 space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-xs font-bold text-stone-800 flex items-center gap-1.5">
-                <span>Hình ảnh bổ sung (Album ảnh phụ)</span>
+                <span>Ảnh bổ sung (Album phụ)</span>
                 <span className="text-[11px] font-semibold text-amber-700 bg-amber-100/70 px-2 py-0.5 rounded-md">
                   ({additionalImages.length}/3 ảnh)
                 </span>
               </label>
               {isUploadingExtra && (
                 <span className="text-xs text-amber-600 font-semibold animate-pulse">
-                  Đang tải ảnh bổ sung lên...
+                  Đang tải ảnh...
                 </span>
               )}
             </div>
 
             {/* Direct Device Upload for Extra Images */}
             {additionalImages.length < 3 ? (
-              <div className="flex flex-wrap items-center gap-2.5">
+              <div className="flex flex-wrap items-center gap-2">
                 <label
-                  className={`cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-stone-800 hover:bg-stone-900 text-white font-semibold text-xs transition-colors shadow-xs ${
+                  className={`cursor-pointer inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-stone-800 hover:bg-stone-900 text-white font-semibold text-xs transition-colors shadow-xs ${
                     isUploadingExtra ? 'opacity-50 pointer-events-none' : ''
                   }`}
                 >
                   <Upload className="w-3.5 h-3.5 text-amber-400" />
                   <span>
-                    Chọn ảnh từ máy tính để tải lên ({3 - additionalImages.length} ảnh còn lại)
+                    Thêm ảnh phụ (còn {3 - additionalImages.length})
                   </span>
                   <input
                     type="file"
@@ -439,7 +439,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
                     className="hidden"
                   />
                 </label>
-                <span className="text-[11px] text-stone-500">Tối đa 3 ảnh phụ (chọn 1 hoặc nhiều ảnh cùng lúc)</span>
+                <span className="text-[11px] text-stone-500">Tối đa 3 ảnh phụ</span>
               </div>
             ) : (
               <div className="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-800 text-xs font-medium flex items-center gap-2">
