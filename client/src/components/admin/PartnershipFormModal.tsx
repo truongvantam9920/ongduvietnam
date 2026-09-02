@@ -5,6 +5,7 @@ import { Modal } from '../ui/Modal.js';
 import { api } from '../../services/api.js';
 import { useToast } from '../../context/ToastContext.js';
 import { slugify } from '../../utils/formatters.js';
+import { CONTACT_INFO } from '../../constants/contact.js';
 
 interface PartnershipFormModalProps {
   isOpen: boolean;
@@ -32,8 +33,8 @@ export const PartnershipFormModal: React.FC<PartnershipFormModalProps> = ({
   const [newBenefitInput, setNewBenefitInput] = useState('');
   const [requirements, setRequirements] = useState('');
   const [imageUrl, setImageUrl] = useState('');
-  const [contactPhone, setContactPhone] = useState('0384 575 953');
-  const [contactZalo, setContactZalo] = useState('0384575953');
+  const [contactPhone, setContactPhone] = useState(CONTACT_INFO.hotline);
+  const [contactZalo, setContactZalo] = useState(CONTACT_INFO.zaloNumber);
   const [isActive, setIsActive] = useState(true);
   const [orderIndex, setOrderIndex] = useState(0);
 
@@ -51,8 +52,8 @@ export const PartnershipFormModal: React.FC<PartnershipFormModalProps> = ({
       setBenefits(Array.isArray(programToEdit.benefits) ? programToEdit.benefits : []);
       setRequirements(programToEdit.requirements || '');
       setImageUrl(programToEdit.image_url);
-      setContactPhone(programToEdit.contact_phone || '0384 575 953');
-      setContactZalo(programToEdit.contact_zalo || '0384575953');
+      setContactPhone(programToEdit.contact_phone || CONTACT_INFO.hotline);
+      setContactZalo(programToEdit.contact_zalo || CONTACT_INFO.zaloNumber);
       setIsActive(Boolean(programToEdit.is_active));
       setOrderIndex(programToEdit.order_index);
     } else {
@@ -70,8 +71,8 @@ export const PartnershipFormModal: React.FC<PartnershipFormModalProps> = ({
       ]);
       setRequirements('Có diện tích vườn cây ăn trái, cây lâm nghiệp hoặc khuôn viên xanh từ 100m² trở lên.');
       setImageUrl('');
-      setContactPhone('0384 575 953');
-      setContactZalo('0384575953');
+      setContactPhone(CONTACT_INFO.hotline);
+      setContactZalo(CONTACT_INFO.zaloNumber);
       setIsActive(true);
       setOrderIndex(0);
     }
@@ -386,7 +387,7 @@ export const PartnershipFormModal: React.FC<PartnershipFormModalProps> = ({
               type="text"
               value={contactPhone}
               onChange={(e) => setContactPhone(e.target.value)}
-              placeholder="VD: 0384 575 953"
+              placeholder={`VD: ${CONTACT_INFO.hotline}`}
               className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs"
             />
           </div>
@@ -397,7 +398,7 @@ export const PartnershipFormModal: React.FC<PartnershipFormModalProps> = ({
               type="text"
               value={contactZalo}
               onChange={(e) => setContactZalo(e.target.value)}
-              placeholder="VD: 0384575953"
+              placeholder={`VD: ${CONTACT_INFO.zaloNumber}`}
               className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs"
             />
           </div>

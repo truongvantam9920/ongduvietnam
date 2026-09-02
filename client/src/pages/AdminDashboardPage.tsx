@@ -16,6 +16,7 @@ import { PartnershipFormModal } from '../components/admin/PartnershipFormModal.j
 import { ChangePasswordModal } from '../components/admin/ChangePasswordModal.js';
 import { ConfirmDialog } from '../components/ui/ConfirmDialog.js';
 import { formatVND } from '../utils/formatters.js';
+import { CONTACT_INFO } from '../constants/contact.js';
 
 interface AdminDashboardPageProps {
   onNavigate: (route: PageRoute) => void;
@@ -713,8 +714,8 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
                         </td>
 
                         <td className="py-3 px-4 text-stone-600 whitespace-nowrap">
-                          <div>Zalo: <strong>{prog.contact_zalo || '0384575953'}</strong></div>
-                          <div className="text-stone-400 text-[11px]">Hotline: {prog.contact_phone || '0384 575 953'}</div>
+                          <div>Zalo: <strong>{prog.contact_zalo || CONTACT_INFO.zaloNumber}</strong></div>
+                          <div className="text-stone-400 text-[11px]">Hotline: {prog.contact_phone || CONTACT_INFO.hotline}</div>
                         </td>
 
                         <td className="py-3 px-3 text-center">

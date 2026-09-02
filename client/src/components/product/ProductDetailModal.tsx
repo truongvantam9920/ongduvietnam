@@ -238,7 +238,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               className="w-full sm:w-auto py-3.5 px-5 rounded-2xl bg-amber-50 hover:bg-amber-100 text-amber-800 font-bold text-sm border border-amber-200 transition-colors flex items-center justify-center gap-2"
             >
               <PhoneCall className="w-4 h-4 text-amber-600" />
-              <span>0384575953</span>
+              <span>{hotline}</span>
             </a>
           </div>
         </div>
