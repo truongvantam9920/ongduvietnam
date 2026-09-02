@@ -4,6 +4,7 @@ import type { Product, Category, ProductFormData } from '../../types/index.js';
 import { Modal } from '../ui/Modal.js';
 import { api } from '../../services/api.js';
 import { useToast } from '../../context/ToastContext.js';
+import { formatWithDots, parseFromDots } from '../../utils/formatters.js';
 
 interface ProductFormModalProps {
   isOpen: boolean;
@@ -11,18 +12,6 @@ interface ProductFormModalProps {
   onSuccess: () => void;
   productToEdit?: Product | null;
   categories: Category[];
-}
-
-export function formatWithDots(val: number | string | undefined | null): string {
-  if (val === '' || val === undefined || val === null) return '';
-  const numStr = String(val).replace(/\D/g, '');
-  if (!numStr) return '';
-  return Number(numStr).toLocaleString('vi-VN');
-}
-
-export function parseFromDots(val: string): number | '' {
-  const raw = val.replace(/\D/g, '');
-  return raw === '' ? '' : Number(raw);
 }
 
 export const ProductFormModal: React.FC<ProductFormModalProps> = ({

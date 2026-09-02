@@ -4,25 +4,13 @@ import type { Category } from '../../types/index.js';
 import { Modal } from '../ui/Modal.js';
 import { api } from '../../services/api.js';
 import { useToast } from '../../context/ToastContext.js';
+import { slugify } from '../../utils/formatters.js';
 
 interface CategoryManagerModalProps {
   isOpen: boolean;
   onClose: () => void;
   categories: Category[];
   onRefresh: () => void;
-}
-
-function slugify(text: string): string {
-  return text
-    .toString()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .trim()
-    .replace(/đ/g, 'd')
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/[\s_-]+/g, '-')
-    .replace(/^-+|-+$/g, '');
 }
 
 export const CategoryManagerModal: React.FC<CategoryManagerModalProps> = ({

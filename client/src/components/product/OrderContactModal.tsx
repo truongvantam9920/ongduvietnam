@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { Phone, Plus, Minus, CheckCircle, ShieldCheck, Sparkles, Send } from 'lucide-react';
 import { ZaloIcon } from '../ui/ZaloIcon.js';
 import { CONTACT_INFO } from '../../constants/contact.js';
-import type { Product } from '../../types/index.js';
 import { Modal } from '../ui/Modal.js';
-import { formatVND } from './ProductCard.js';
+import { formatVND } from '../../utils/formatters.js';
 import { useToast } from '../../context/ToastContext.js';
 
 interface OrderContactModalProps {

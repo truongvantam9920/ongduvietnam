@@ -13,7 +13,7 @@ import { ProductFormModal } from '../components/admin/ProductFormModal.js';
 import { CategoryManagerModal } from '../components/admin/CategoryManagerModal.js';
 import { ChangePasswordModal } from '../components/admin/ChangePasswordModal.js';
 import { ConfirmDialog } from '../components/ui/ConfirmDialog.js';
-import { formatVND } from '../components/product/ProductCard.js';
+import { formatVND } from '../utils/formatters.js';
 
 interface AdminDashboardPageProps {
   onNavigate: (route: PageRoute) => void;

@@ -5,7 +5,7 @@ import { CONTACT_INFO } from '../../constants/contact.js';
 import type { Product } from '../../types/index.js';
 import { Modal } from '../ui/Modal.js';
 import { StockBadge, RatingBadge, FeaturedBadge } from '../ui/Badge.js';
-import { formatVND } from './ProductCard.js';
+import { formatVND } from '../../utils/formatters.js';
 
 interface ProductDetailModalProps {
   product: Product | null;

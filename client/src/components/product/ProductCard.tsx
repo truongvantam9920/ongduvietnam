@@ -2,18 +2,12 @@ import React from 'react';
 import { Eye, PhoneCall, Sparkles, ArrowUpRight } from 'lucide-react';
 import type { Product } from '../../types/index.js';
 import { RatingBadge, StockBadge, FeaturedBadge } from '../ui/Badge.js';
+import { formatVND } from '../../utils/formatters.js';
 
 interface ProductCardProps {
   product: Product;
   onSelect: (product: Product) => void;
   onOrder: (product: Product) => void;
-}
-
-export function formatVND(amount: number): string {
-  return new Intl.NumberFormat('vi-VN', {
-    style: 'currency',
-    currency: 'VND',
-  }).format(amount);
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
