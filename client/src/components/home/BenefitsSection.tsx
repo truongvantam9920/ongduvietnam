@@ -1,49 +1,49 @@
 import React from 'react';
-import { ShieldCheck, Heart, Apple, Sparkles, Sun, Activity, AlertTriangle } from 'lucide-react';
+import { Sparkles, AlertTriangle } from 'lucide-react';
 
 export const BenefitsSection: React.FC = () => {
   const benefits = [
     {
-      icon: ShieldCheck,
-      color: 'bg-[#14412f] border-[#276e50]/60 text-emerald-300',
+      num: '01',
+      highlight: 'Dược Tính',
       title: 'Hỗ Trợ Miễn Dịch Tự Nhiên',
-      description: 'Giàu hợp chất chống oxy hóa (Polyphenol, Flavonoid) từ keo ong Cerumen, hỗ trợ nâng cao sức đề kháng cơ thể.',
+      description: 'Giàu hợp chất chống oxy hóa tự nhiên (Polyphenol, Flavonoid) từ keo ong Cerumen, hỗ trợ nâng cao sức đề kháng cơ thể.',
       tag: 'Kháng khuẩn',
     },
     {
-      icon: Heart,
-      color: 'bg-[#3b171c] border-[#662832]/60 text-rose-300',
+      num: '02',
+      highlight: 'Vi Sinh',
       title: 'Hỗ Trợ Tiêu Hóa & Đường Ruột',
-      description: 'Men vi sinh hữu cơ tự nhiên hỗ trợ làm dịu niêm mạc, cải thiện chứng đầy hơi và khó tiêu.',
+      description: 'Men vi sinh hữu cơ tự nhiên từ tổ ong hỗ trợ làm dịu niêm mạc, cải thiện chứng đầy hơi, ợ chua và khó tiêu.',
       tag: 'Men vi sinh',
     },
     {
-      icon: Apple,
-      color: 'bg-[#2a2211] border-[#5e481c]/60 text-[#f0cf7e]',
+      num: '03',
+      highlight: 'Dinh Dưỡng',
       title: 'Chứa Đường Quý Trehalulose',
-      description: 'Trehalulose giải phóng năng lượng từ từ, chỉ số GI thấp, ít gây tăng vọt đường huyết so với đường tinh luyện.',
+      description: 'Đường Trehalulose giải phóng năng lượng từ từ với chỉ số GI thấp, ít gây tăng vọt đường huyết so với đường thông thường.',
       tag: 'Chỉ số GI thấp',
     },
     {
-      icon: Activity,
-      color: 'bg-[#14412f] border-[#276e50]/60 text-emerald-300',
+      num: '04',
+      highlight: 'Thanh Quản',
       title: 'Làm Dịu Cổ Họng & Giảm Ho',
       description: 'Vị chua ngọt thanh mát tự nhiên giúp làm dịu cảm giác ngứa rát họng, khản tiếng và ho do thay đổi thời tiết.',
-      tag: 'Dịu thanh quản',
+      tag: 'Dịu êm thanh quản',
     },
     {
-      icon: Sun,
-      color: 'bg-[#2a2211] border-[#5e481c]/60 text-[#f0cf7e]',
-      title: 'Bổ Sung Năng Lượng Sạch',
-      description: 'Bổ sung enzyme và khoáng chất vi lượng, giúp phục hồi thể lực cho người lớn tuổi, người mệt mỏi.',
+      num: '05',
+      highlight: 'Phục Hồi',
+      title: 'Bổ Sung Năng Lượng Tự Nhiên',
+      description: 'Cung cấp enzyme tự nhiên và khoáng chất vi lượng, hỗ trợ bồi bổ thể lực cho người lớn tuổi, người vừa ốm dậy.',
       tag: 'Bồi bổ thể lực',
     },
     {
-      icon: Sparkles,
-      color: 'bg-[#241738] border-[#4b2d75]/60 text-purple-300',
-      title: 'Chăm Sóc & Dưỡng Ẩm Da',
-      description: 'Dùng bôi ngoài da hỗ trợ làm dịu vết trầy xước, côn trùng cắn và cấp ẩm sinh học tự nhiên.',
-      tag: 'Dưỡng ẩm tự nhiên',
+      num: '06',
+      highlight: 'Làn Da',
+      title: 'Chăm Sóc & Cấp Ẩm Sinh Học',
+      description: 'Dùng thoa ngoài hỗ trợ làm dịu vết trầy xước, côn trùng cắn và cung cấp độ ẩm sinh học tự nhiên cho da mềm mịn.',
+      tag: 'Cấp ẩm tự nhiên',
     },
   ];
 
@@ -68,35 +68,38 @@ export const BenefitsSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Grid Cards (Compact) */}
+        {/* Grid Cards with Luxury Numbered Emblem Badges */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-          {benefits.map((benefit, index) => {
-            const Icon = benefit.icon;
-            return (
-              <div
-                key={index}
-                className="bg-[#0e2c20]/80 p-5 sm:p-6 rounded-2xl border border-[#206147]/50 hover:border-[#d49a2a]/40 hover:bg-[#123829]/90 transition-all duration-300 flex flex-col justify-between group backdrop-blur-md shadow-lg hover:-translate-y-0.5"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div className={`w-10 h-10 rounded-xl border ${benefit.color} flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform`}>
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <span className="text-[10px] font-bold text-emerald-200/90 bg-[#081a12]/80 px-2.5 py-0.5 rounded-md border border-[#1b553e]/50">
-                      {benefit.tag}
+          {benefits.map((benefit) => (
+            <div
+              key={benefit.num}
+              className="bg-[#0e2c20]/80 p-5 sm:p-6 rounded-2xl border border-[#206147]/50 hover:border-[#d49a2a]/50 hover:bg-[#123829]/95 transition-all duration-300 flex flex-col justify-between group backdrop-blur-md shadow-lg hover:-translate-y-0.5"
+            >
+              <div className="space-y-3.5">
+                {/* Header row: Numbered luxury emblem + category tag */}
+                <div className="flex items-center justify-between pb-2.5 border-b border-[#1b553e]/40">
+                  <div className="flex items-center gap-2.5">
+                    <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-gradient-to-br from-[#d49a2a]/25 to-[#051710] border border-[#d49a2a]/40 text-amber-300 font-serif font-black text-xs shadow-inner group-hover:scale-105 transition-transform">
+                      {benefit.num}
+                    </span>
+                    <span className="text-[11px] font-bold text-emerald-300 uppercase tracking-widest font-mono">
+                      {benefit.highlight}
                     </span>
                   </div>
-
-                  <h3 className="text-base font-bold text-white group-hover:text-[#f0cf7e] transition-colors font-serif pt-1">
-                    {benefit.title}
-                  </h3>
-                  <p className="text-xs text-emerald-100/70 leading-relaxed">
-                    {benefit.description}
-                  </p>
+                  <span className="text-[10px] font-semibold text-amber-200/90 bg-[#081a12]/90 px-2.5 py-0.5 rounded-full border border-amber-600/35">
+                    {benefit.tag}
+                  </span>
                 </div>
+
+                <h3 className="text-base font-bold text-white group-hover:text-[#f0cf7e] transition-colors font-serif">
+                  {benefit.title}
+                </h3>
+                <p className="text-xs text-emerald-100/70 leading-relaxed">
+                  {benefit.description}
+                </p>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
 
         {/* Compact Medical Disclaimer Notice */}
