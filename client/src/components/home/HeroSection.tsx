@@ -110,12 +110,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
         {/* Main Hero Header */}
         <div className="max-w-4xl mx-auto space-y-8 text-center bg-[#071a13]/60 sm:bg-[#071a13]/50 backdrop-blur-md p-6 sm:p-10 md:p-12 rounded-3xl border border-[#24674d]/50 shadow-2xl">
           {/* Top Brand Subtitle Tag */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#0d2d20]/95 border border-[#24674d] text-[#d1fae5] text-xs font-semibold backdrop-blur-md shadow-lg">
-            <span className="relative flex h-2 w-2">
+          <div className="inline-flex items-center gap-2.5 px-4 py-2 sm:py-1.5 rounded-2xl sm:rounded-full bg-[#0d2d20]/95 border border-[#24674d] text-[#d1fae5] text-xs font-semibold backdrop-blur-md shadow-lg text-center">
+            <span className="relative flex h-2 w-2 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d49a2a] opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#d49a2a]"></span>
             </span>
-            <span>Hệ sinh thái mật ong dú nguyên bản • Ong Dú Việt Nam</span>
+            <span className="leading-snug">
+              Hệ sinh thái mật ong dú nguyên bản <span className="hidden sm:inline">•</span><br className="sm:hidden" /> <strong className="text-amber-300 font-bold">Ong Dú Việt Nam</strong>
+            </span>
           </div>
 
           {/* Headline */}
