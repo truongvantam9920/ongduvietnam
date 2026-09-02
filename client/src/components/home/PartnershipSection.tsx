@@ -60,14 +60,16 @@ export const PartnershipSection: React.FC<PartnershipSectionProps> = () => {
           </h2>
 
           {/* Showcase Farm Banner Image */}
-          <div className="relative aspect-16/9 sm:aspect-21/9 rounded-3xl overflow-hidden border border-[#d49a2a]/40 shadow-2xl shadow-black/60 group mt-4">
+          <div className="relative aspect-16/9 sm:aspect-21/9 rounded-3xl overflow-hidden border border-[#d49a2a]/40 shadow-2xl shadow-black/60 group mt-4 bg-stone-900">
             <img
               src="/images/farm-banner.jpg"
               alt="Mô hình trang trại nuôi ong dú sinh thái Ong Dú Việt Nam"
+              loading="eager"
+              decoding="async"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
             {/* Ambient vignette overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#040f0a]/90 via-transparent to-black/20" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#040f0a]/90 via-transparent to-black/20 pointer-events-none" />
 
             {/* Bottom floating badge on image */}
             <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-2xl bg-[#092218]/90 backdrop-blur-md border border-[#24674d]/80 text-left">
