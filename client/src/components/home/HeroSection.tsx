@@ -121,8 +121,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
           </div>
 
           {/* Headline */}
-          <h1 className="text-[26px] sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.25] sm:leading-[1.15] tracking-tight drop-shadow-lg">
-            Mật Ong Dú <span className="text-gold-gradient whitespace-nowrap">Thượng Hạng</span><br className="sm:inline" /> Từ Thiên Nhiên Rừng Bản Địa
+          <h1 className="text-[22px] sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight sm:leading-[1.15] tracking-tight drop-shadow-lg font-serif">
+            <span className="block">
+              Mật Ong Dú <span className="text-gold-gradient whitespace-nowrap">Thượng Hạng</span>
+            </span>
+            <span className="block text-[18px] sm:text-4xl lg:text-5xl text-stone-100 font-sans font-bold mt-1 sm:mt-2">
+              Từ Thiên Nhiên Rừng Bản Địa
+            </span>
           </h1>
 
           {/* CTA Buttons */}
