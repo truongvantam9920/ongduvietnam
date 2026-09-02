@@ -110,11 +110,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
         {/* Main Hero Header */}
         <div className="max-w-4xl mx-auto space-y-8 text-center bg-[#071a13]/60 sm:bg-[#071a13]/50 backdrop-blur-md p-6 sm:p-10 md:p-12 rounded-3xl border border-[#24674d]/50 shadow-2xl">
           {/* Top Brand Subtitle Tag */}
-          <div className="inline-flex items-center gap-2 px-3.5 sm:px-5 py-2 sm:py-1.5 rounded-2xl sm:rounded-full bg-[#0d2d20]/95 border border-[#24674d] text-[#d1fae5] text-xs font-semibold backdrop-blur-md shadow-lg text-center">
-            <span className="relative flex h-2 w-2 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d49a2a] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#d49a2a]"></span>
-            </span>
+          <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-1.5 rounded-2xl sm:rounded-full bg-[#0d2d20]/95 border border-[#24674d] text-[#d1fae5] text-xs font-semibold backdrop-blur-md shadow-lg text-center">
             <span className="leading-snug text-[11px] sm:text-xs">
               Bảo Tồn - Nhân Nuôi - Thụ Phấn - Nghiên Cứu - Sản Phẩm Ong Không Ngòi Đốt
             </span>
@@ -125,7 +121,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
             <span className="block whitespace-nowrap">
               Mật Ong Dú <span className="text-gold-gradient">Thượng Hạng</span>
             </span>
-            <span className="block whitespace-nowrap text-xl xs:text-2xl sm:text-4xl lg:text-5xl text-stone-100 font-sans font-bold mt-1 sm:mt-2">
+            <span className="block whitespace-nowrap text-stone-100 mt-1 sm:mt-2">
               Từ Thiên Nhiên
             </span>
           </h1>
