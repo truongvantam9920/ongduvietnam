@@ -91,10 +91,10 @@ export const BenefitsSection: React.FC = () => {
                   </span>
                 </div>
 
-                <h3 className="text-base font-bold text-white group-hover:text-[#f0cf7e] transition-colors font-serif">
+                <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-[#f0cf7e] transition-colors font-serif line-clamp-1 sm:line-clamp-none">
                   {benefit.title}
                 </h3>
-                <p className="text-xs text-emerald-100/70 leading-relaxed">
+                <p className="text-xs text-emerald-100/70 leading-relaxed line-clamp-2 sm:line-clamp-none">
                   {benefit.description}
                 </p>
               </div>
