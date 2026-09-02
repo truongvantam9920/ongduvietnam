@@ -50,9 +50,11 @@ export const PartnershipSection: React.FC<PartnershipSectionProps> = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-12 sm:space-y-16">
         {/* Section Header */}
         <div className="max-w-5xl mx-auto text-center space-y-6">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#092218]/90 border border-[#d49a2a]/60 text-amber-300 text-xs font-semibold backdrop-blur-md shadow-xl">
-            <Handshake className="w-3.5 h-3.5 text-amber-400" />
-            <span>Mô hình kinh tế nông nghiệp sinh thái bền vững • Ong Dú Việt Nam</span>
+          <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-2xl sm:rounded-full bg-[#092218]/90 border border-[#d49a2a]/60 text-amber-300 text-xs font-semibold backdrop-blur-md shadow-xl text-center">
+            <Handshake className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+            <span>
+              Mô hình kinh tế sinh thái bền vững <span className="hidden sm:inline">•</span> <span className="block sm:inline text-gold-gradient font-bold">Ong Dú Việt Nam</span>
+            </span>
           </div>
 
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight tracking-tight uppercase font-serif drop-shadow-lg">
