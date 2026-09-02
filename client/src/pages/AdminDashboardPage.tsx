@@ -291,22 +291,24 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
 
       {/* Main Content Area */}
       <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-5 sm:pt-8 space-y-6">
-        {/* Top Tab Switcher */}
-        <div className="flex items-center gap-2.5 border-b border-stone-200 pb-3">
+        {/* Top Tab Switcher - Clean Segmented Control */}
+        <div className="bg-stone-200/80 p-1.5 rounded-2xl inline-flex flex-wrap items-center gap-1.5 shadow-inner border border-stone-300/80">
           <button
             type="button"
             onClick={() => setActiveTab('products')}
-            className={`flex items-center gap-2 px-5 py-3 rounded-2xl font-bold text-xs sm:text-sm transition-all cursor-pointer ${
+            className={`flex items-center gap-2.5 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all cursor-pointer ${
               activeTab === 'products'
-                ? 'bg-gradient-to-r from-amber-600 to-amber-500 text-white shadow-md shadow-amber-500/25 scale-100'
-                : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
+                ? 'bg-white text-stone-950 shadow-sm border border-stone-300/90 scale-100'
+                : 'text-stone-600 hover:text-stone-950 hover:bg-white/50 border border-transparent'
             }`}
           >
-            <Package className="w-4 h-4" />
+            <Package className={`w-4 h-4 ${activeTab === 'products' ? 'text-amber-600' : 'text-stone-400'}`} />
             <span>Quản Lý Sản Phẩm</span>
             <span
-              className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                activeTab === 'products' ? 'bg-amber-800/80 text-amber-100' : 'bg-stone-100 text-stone-600'
+              className={`px-2 py-0.5 rounded-md text-[11px] font-extrabold ${
+                activeTab === 'products'
+                  ? 'bg-amber-100 text-amber-900 border border-amber-300'
+                  : 'bg-stone-300/80 text-stone-700'
               }`}
             >
               {products.length}
@@ -316,17 +318,19 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
           <button
             type="button"
             onClick={() => setActiveTab('partnerships')}
-            className={`flex items-center gap-2 px-5 py-3 rounded-2xl font-bold text-xs sm:text-sm transition-all cursor-pointer ${
+            className={`flex items-center gap-2.5 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all cursor-pointer ${
               activeTab === 'partnerships'
-                ? 'bg-[#14412f] text-amber-300 border border-amber-400/40 shadow-md shadow-emerald-950/25 scale-100'
-                : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
+                ? 'bg-white text-stone-950 shadow-sm border border-stone-300/90 scale-100'
+                : 'text-stone-600 hover:text-stone-950 hover:bg-white/50 border border-transparent'
             }`}
           >
-            <Handshake className="w-4 h-4" />
+            <Handshake className={`w-4 h-4 ${activeTab === 'partnerships' ? 'text-emerald-700' : 'text-stone-400'}`} />
             <span>Hợp Tác Trại Ong</span>
             <span
-              className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                activeTab === 'partnerships' ? 'bg-[#092218] text-amber-300' : 'bg-stone-100 text-stone-600'
+              className={`px-2 py-0.5 rounded-md text-[11px] font-extrabold ${
+                activeTab === 'partnerships'
+                  ? 'bg-emerald-100 text-emerald-900 border border-emerald-300'
+                  : 'bg-stone-300/80 text-stone-700'
               }`}
             >
               {partnerships.length}
