@@ -505,13 +505,10 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
                           />
                         </td>
 
-                        {/* Title & Slug */}
+                        {/* Title */}
                         <td className="py-3 px-4 max-w-xs">
-                          <div className="font-bold text-stone-900 text-sm line-clamp-1 font-serif">
+                          <div className="font-bold text-stone-900 text-sm line-clamp-2 font-serif">
                             {product.name}
-                          </div>
-                          <div className="text-[11px] font-mono text-stone-400 truncate mt-0.5">
-                            /{product.slug}
                           </div>
                         </td>
 
@@ -699,11 +696,8 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
                         </td>
 
                         <td className="py-3 px-4 max-w-xs">
-                          <div className="font-bold text-stone-900 text-sm font-serif line-clamp-1">
+                          <div className="font-bold text-stone-900 text-sm font-serif line-clamp-2">
                             {prog.title}
-                          </div>
-                          <div className="font-mono text-[11px] text-stone-400 mt-0.5 truncate">
-                            /{prog.slug}
                           </div>
                         </td>
 
