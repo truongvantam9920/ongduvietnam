@@ -1,3 +1,4 @@
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   Package, Plus, FolderTree, Search, Filter, RefreshCw,
   Edit2, Trash2, Eye, EyeOff, Sparkles, CheckCircle2,
