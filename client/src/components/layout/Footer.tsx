@@ -80,6 +80,19 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => {
                     onNavigate('home');
                     setTimeout(() => {
+                      document.querySelector('#partnership')?.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                  }}
+                  className="hover:text-amber-400 text-amber-300 font-semibold transition-colors text-left"
+                >
+                  Hợp Tác Trại Ong
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => {
+                    onNavigate('home');
+                    setTimeout(() => {
                       document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' });
                     }, 100);
                   }}

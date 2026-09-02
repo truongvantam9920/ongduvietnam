@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone, ShoppingBag, Sparkles, MessageCircle } from 'lucide-react';
+import { Menu, X, Phone, ShoppingBag, Sparkles, MessageCircle, Handshake } from 'lucide-react';
 import { ZaloIcon } from '../ui/ZaloIcon.js';
 import { CONTACT_INFO } from '../../constants/contact.js';
 import type { PageRoute } from '../../types/index.js';
@@ -19,7 +19,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentRoute, onNavigate }) => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -41,6 +41,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentRoute, onNavigate }) => {
   const navItems: { label: string; route: PageRoute; hash?: string; icon?: React.ElementType }[] = [
     { label: 'Trang Chủ', route: 'home' },
     { label: 'Sản Phẩm', route: 'products', icon: ShoppingBag },
+    { label: 'Hợp Tác Trại Ong', route: 'home', hash: '#partnership', icon: Handshake },
     { label: 'Liên Hệ', route: 'home', hash: '#contact', icon: MessageCircle },
   ];
 

@@ -7,6 +7,7 @@ import { authRouter } from './routes/auth.routes.js';
 import { productRouter } from './routes/product.routes.js';
 import { categoryRouter } from './routes/category.routes.js';
 import { uploadRouter } from './routes/upload.routes.js';
+import { partnershipRouter } from './routes/partnership.routes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
 // Initialize Express App
@@ -43,6 +44,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/products', productRouter);
 app.use('/api/categories', categoryRouter);
 app.use('/api/upload', uploadRouter);
+app.use('/api/partnerships', partnershipRouter);
 
 // Serve Client SPA in production or when built
 const clientDistPath = path.resolve(process.cwd(), 'dist/client');

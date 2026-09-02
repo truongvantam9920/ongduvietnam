@@ -242,6 +242,50 @@
       "review_count": 46
     }
   ],
+  "partnerships": [
+    {
+      "id": 1,
+      "title": "Chính Sách Liên Kết Mở Rộng Trại Nuôi Ong Dú & Bao Tiêu Đầu Ra 100%",
+      "slug": "chinh-sach-lien-ket-mo-rong-trai-nuoi-ong-du-bao-tieu-dau-ra",
+      "subtitle": "Hợp tác phát triển kinh tế sinh thái bền vững cùng thương hiệu Ong Dú Việt Nam",
+      "summary": "Ong Dú Việt Nam cung cấp đàn ong giống chuẩn F1 khỏe mạnh, chuyển giao kỹ thuật nuôi thùng khoa học và ký hợp đồng cam kết bao tiêu 100% sản lượng mật ong dú, keo ong tự nhiên theo giá niêm yết ổn định lâu dài.",
+      "content": "Nhằm bảo tồn nguồn gen ong dú bản địa và mở rộng chuỗi cung ứng mật ong dú chất lượng cao đạt chuẩn xuất khẩu, Ong Dú Việt Nam triển khai chương trình liên kết hợp tác mở rộng trại nuôi trên toàn quốc.\n\n### Quyền Lợi Của Đối Tác Hợp Tác:\n1. **Bao tiêu đầu ra dài hạn:** Ký hợp đồng thu mua định kỳ toàn bộ sản lượng mật ong dú và keo ong nguyên chất với mức giá bảo hộ ổn định.\n2. **Cung cấp nguồn giống thuần hóa:** Đàn giống Tetragonula F1 khỏe mạnh, chúa tơ đẻ tốt, đã thích nghi hoàn toàn với khí hậu các vùng miền.\n3. **Chuyển giao công nghệ nhân giống:** Hướng dẫn kỹ thuật chia đàn (nhân đàn 2 tầng), kỹ thuật hút mật vô trùng bằng máy hút chân không chuyên dụng không tổn thương ấu trùng.\n4. **Đồng hành kỹ thuật 24/7:** Chuyên gia ong học trực tiếp hỗ trợ, giải đáp và xử lý các vấn đề dịch hại (ruồi lưng gù, kiến, mối) suốt quá trình nuôi.",
+      "benefits": [
+        "Ký hợp đồng bao tiêu đầu ra 100% sản lượng mật & keo ong",
+        "Cung ứng nguồn giống thuần hóa F1 sung mãn, năng suất cao",
+        "Chuyển giao kỹ thuật chia đàn và hút mật vô trùng chuẩn khoa học",
+        "Hỗ trợ kỹ thuật viên đồng hành 24/7 trong suốt quá trình nuôi"
+      ],
+      "requirements": "Có diện tích vườn cây ăn trái, cây lâm nghiệp hoặc khuôn viên xanh từ 100m² trở lên, không phun xịt thuốc trừ sâu hóa học trong bán kính 500m.",
+      "image_url": "/images/product-hive-box.jpg",
+      "contact_phone": "0384 575 953",
+      "contact_zalo": "0384575953",
+      "is_active": 1,
+      "order_index": 1,
+      "created_at": "2026-09-01T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "title": "Chương Trình Chuyển Giao Công Nghệ Thùng Nuôi Thông Minh & Hút Mật Vô Trùng",
+      "slug": "chuyen-giao-cong-nghe-thung-nuoi-thong-minh-hut-mat-vo-trung",
+      "subtitle": "Tối ưu hóa sản lượng mật và nhân đàn gấp 2–3 lần mỗi năm",
+      "summary": "Chuyển giao mẫu thùng nuôi ong dú 2 tầng – 3 tầng gỗ sinh thái chống nóng, chống ẩm kết hợp bộ dụng cụ hút mật chân không mini giúp thu hoạch mật sạch 100%, bảo vệ an toàn tuyệt đối cho trứng ấu trùng và đàn ong non.",
+      "content": "Mô hình nuôi ong dú truyền thống trong bọng cây hoặc hốc gỗ thường gặp khó khăn khi thu hoạch mật (dễ làm vỡ trứng, lẫn phấn hoa và chua mật). Ong Dú Việt Nam chuyển giao trọn gói giải pháp thùng nuôi chuyên biệt:\n\n- **Cấu trúc thùng tầng thông minh:** Tách biệt rõ ràng tầng trứng đẻ phía dưới và tầng tích trữ túi mật cerumen phía trên.\n- **Hút mật chân không vi sinh:** Giữ nguyên hàm lượng men Enzyme, phấn hoa và hợp chất Trehalulose quý hiếm.\n- **Nhân đàn nhanh chóng:** Dễ dàng kiểm tra sức khỏe chúa và nhân đàn chỉ trong 10 phút thao tác.",
+      "benefits": [
+        "Mẫu thùng gỗ tự nhiên 2-3 tầng chống nóng, chuẩn kích thước sinh học",
+        "Thiết bị hút mật vi sinh sạch tinh khiết, không lẫn ấu trùng",
+        "Tài liệu hướng dẫn & Video thực hành chi tiết từng bước",
+        "Hỗ trợ kiểm định chất lượng mật đạt chuẩn vi sinh & Trehalulose"
+      ],
+      "requirements": "Dành cho các chủ trang trại, hộ gia đình hoặc cá nhân đam mê nông nghiệp sinh thái muốn phát triển đàn ong dú chuyên nghiệp.",
+      "image_url": "/images/knowledge-hive-split.jpg",
+      "contact_phone": "0384 575 953",
+      "contact_zalo": "0384575953",
+      "is_active": 1,
+      "order_index": 2,
+      "created_at": "2026-09-01T00:00:00.000Z"
+    }
+  ],
   "admin": {
     "username": "admin",
     "password_hash": "",

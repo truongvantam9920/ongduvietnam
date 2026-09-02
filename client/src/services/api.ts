@@ -215,5 +215,42 @@ export const api = {
       body: JSON.stringify(data),
     });
   },
+
+  // Partnership Programs Operations
+  async getPartnerships(includeInactive = false): Promise<{ success: boolean; data: PartnershipProgram[]; total: number }> {
+    const query = includeInactive ? '?all=true' : '';
+    return fetchJson(`/partnerships${query}`);
+  },
+
+  async getPartnershipById(id: number): Promise<{ success: boolean; data: PartnershipProgram }> {
+    return fetchJson(`/partnerships/${id}`);
+  },
+
+  async createPartnership(data: PartnershipFormData): Promise<{ success: boolean; data: PartnershipProgram; message: string }> {
+    return fetchJson('/partnerships', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
+
+  async updatePartnership(id: number, data: Partial<PartnershipFormData>): Promise<{ success: boolean; data: PartnershipProgram; message: string }> {
+    return fetchJson(`/partnerships/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  },
+
+  async deletePartnership(id: number): Promise<{ success: boolean; message: string }> {
+    return fetchJson(`/partnerships/${id}`, {
+      method: 'DELETE',
+    });
+  },
+
+  async togglePartnershipStatus(id: number): Promise<{ success: boolean; message: string; data: PartnershipProgram }> {
+    return fetchJson(`/partnerships/${id}/toggle`, {
+      method: 'PATCH',
+    });
+  },
 };
+
 

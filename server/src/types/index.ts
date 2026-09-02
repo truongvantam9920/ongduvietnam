@@ -90,4 +90,41 @@ export interface AdminStats {
   featuredProducts: number;
   outOfStockProducts: number;
   totalCategories: number;
+  totalPartnerships?: number;
 }
+
+export interface PartnershipProgram {
+  id: number;
+  title: string;
+  slug: string;
+  subtitle?: string;
+  summary: string;
+  content: string;
+  benefits: string[];
+  requirements?: string;
+  image_url: string;
+  contact_phone?: string;
+  contact_zalo?: string;
+  is_active: number; // 1 or 0
+  order_index: number;
+  created_at: string;
+  updated_at?: string;
+}
+
+export interface PartnershipCreateInput {
+  title: string;
+  slug?: string;
+  subtitle?: string;
+  summary: string;
+  content: string;
+  benefits?: string[] | string;
+  requirements?: string;
+  image_url: string;
+  contact_phone?: string;
+  contact_zalo?: string;
+  is_active?: boolean | number;
+  order_index?: number;
+}
+
+export interface PartnershipUpdateInput extends Partial<PartnershipCreateInput> {}
+

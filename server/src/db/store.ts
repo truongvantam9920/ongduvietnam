@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import bcrypt from 'bcryptjs';
 import { config } from '../config.js';
-import type { Product, Category, AdminStats, User } from '../types/index.js';
+import type { Product, Category, AdminStats, User, PartnershipProgram, PartnershipCreateInput, PartnershipUpdateInput } from '../types/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,6 +16,7 @@ export interface CatalogData {
   };
   categories: Category[];
   products: Product[];
+  partnerships?: PartnershipProgram[];
 }
 
 function slugify(text: string): string {
@@ -66,6 +67,14 @@ class JsonStore {
             additional_images: Array.isArray(p.additional_images)
               ? p.additional_images
               : (typeof p.additional_images === 'string' ? JSON.parse(p.additional_images || '[]') : []),
+          })),
+          partnerships: (parsed.partnerships || []).map((pt: any) => ({
+            ...pt,
+            benefits: Array.isArray(pt.benefits)
+              ? pt.benefits
+              : (typeof pt.benefits === 'string' ? JSON.parse(pt.benefits || '[]') : []),
+            is_active: pt.is_active !== undefined ? (pt.is_active ? 1 : 0) : 1,
+            order_index: pt.order_index || 0,
           })),
           admin: parsed.admin,
         };
@@ -424,6 +433,137 @@ class JsonStore {
     return deleted;
   }
 
+  // ==========================================
+  // PARTNERSHIP PROGRAMS
+  // ==========================================
+
+  getPartnerships(includeInactive = false): PartnershipProgram[] {
+    if (!this.initialized) this.load();
+    const list = this.data.partnerships || [];
+    const filtered = includeInactive ? list : list.filter((p) => p.is_active);
+    return filtered.sort((a, b) => a.order_index - b.order_index);
+  }
+
+  getPartnershipById(id: number): PartnershipProgram | undefined {
+    if (!this.initialized) this.load();
+    return (this.data.partnerships || []).find((p) => p.id === id);
+  }
+
+  createPartnership(input: PartnershipCreateInput): PartnershipProgram {
+    if (!this.initialized) this.load();
+    if (!this.data.partnerships) this.data.partnerships = [];
+
+    const nextId = this.data.partnerships.length > 0
+      ? Math.max(...this.data.partnerships.map((p) => p.id)) + 1
+      : 1;
+
+    let baseSlug = input.slug?.trim() ? slugify(input.slug) : slugify(input.title);
+    let finalSlug = baseSlug;
+    let counter = 1;
+    while (this.data.partnerships.some((p) => p.slug === finalSlug)) {
+      finalSlug = `${baseSlug}-${counter++}`;
+    }
+
+    let parsedBenefits: string[] = [];
+    if (Array.isArray(input.benefits)) {
+      parsedBenefits = input.benefits;
+    } else if (typeof input.benefits === 'string' && input.benefits.trim()) {
+      try {
+        parsedBenefits = JSON.parse(input.benefits);
+      } catch {
+        parsedBenefits = input.benefits.split('\n').map((s) => s.trim()).filter(Boolean);
+      }
+    }
+
+    const newProg: PartnershipProgram = {
+      id: nextId,
+      title: input.title.trim(),
+      slug: finalSlug,
+      subtitle: input.subtitle?.trim() || undefined,
+      summary: input.summary.trim(),
+      content: input.content.trim(),
+      benefits: parsedBenefits,
+      requirements: input.requirements?.trim() || undefined,
+      image_url: input.image_url.trim(),
+      contact_phone: input.contact_phone?.trim() || undefined,
+      contact_zalo: input.contact_zalo?.trim() || undefined,
+      is_active: input.is_active !== undefined ? (input.is_active ? 1 : 0) : 1,
+      order_index: input.order_index !== undefined ? Number(input.order_index) : this.data.partnerships.length,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
+
+    this.data.partnerships.push(newProg);
+    this.save();
+    return newProg;
+  }
+
+  updatePartnership(id: number, input: PartnershipUpdateInput): PartnershipProgram | undefined {
+    if (!this.initialized) this.load();
+    if (!this.data.partnerships) this.data.partnerships = [];
+
+    const prog = this.data.partnerships.find((p) => p.id === id);
+    if (!prog) return undefined;
+
+    if (input.title !== undefined) prog.title = input.title.trim();
+    if (input.slug !== undefined && input.slug.trim()) {
+      prog.slug = slugify(input.slug);
+    } else if (input.title !== undefined) {
+      prog.slug = slugify(input.title);
+    }
+    if (input.subtitle !== undefined) prog.subtitle = input.subtitle?.trim() || undefined;
+    if (input.summary !== undefined) prog.summary = input.summary.trim();
+    if (input.content !== undefined) prog.content = input.content.trim();
+    if (input.benefits !== undefined) {
+      if (Array.isArray(input.benefits)) {
+        prog.benefits = input.benefits;
+      } else if (typeof input.benefits === 'string') {
+        try {
+          prog.benefits = JSON.parse(input.benefits);
+        } catch {
+          prog.benefits = input.benefits.split('\n').map((s) => s.trim()).filter(Boolean);
+        }
+      }
+    }
+    if (input.requirements !== undefined) prog.requirements = input.requirements?.trim() || undefined;
+    if (input.image_url !== undefined) prog.image_url = input.image_url.trim();
+    if (input.contact_phone !== undefined) prog.contact_phone = input.contact_phone?.trim() || undefined;
+    if (input.contact_zalo !== undefined) prog.contact_zalo = input.contact_zalo?.trim() || undefined;
+    if (input.is_active !== undefined) prog.is_active = input.is_active ? 1 : 0;
+    if (input.order_index !== undefined) prog.order_index = Number(input.order_index);
+    prog.updated_at = new Date().toISOString();
+
+    this.save();
+    return prog;
+  }
+
+  deletePartnership(id: number): PartnershipProgram | undefined {
+    if (!this.initialized) this.load();
+    if (!this.data.partnerships) return undefined;
+
+    const idx = this.data.partnerships.findIndex((p) => p.id === id);
+    if (idx === -1) return undefined;
+
+    const [deleted] = this.data.partnerships.splice(idx, 1);
+    this.save();
+    return deleted;
+  }
+
+  togglePartnership(id: number, field: string): PartnershipProgram | undefined {
+    if (!this.initialized) this.load();
+    if (!this.data.partnerships) return undefined;
+
+    const prog = this.data.partnerships.find((p) => p.id === id);
+    if (!prog) return undefined;
+
+    if (field === 'is_active') {
+      prog.is_active = prog.is_active ? 0 : 1;
+      prog.updated_at = new Date().toISOString();
+      this.save();
+    }
+    return prog;
+  }
+
   getStats(): AdminStats {
     if (!this.initialized) this.load();
     return {
@@ -432,6 +572,7 @@ class JsonStore {
       featuredProducts: this.data.products.filter((p) => p.is_featured).length,
       outOfStockProducts: this.data.products.filter((p) => !p.in_stock).length,
       totalCategories: this.data.categories.length,
+      totalPartnerships: (this.data.partnerships || []).length,
     };
   }
 

@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   Package, Plus, FolderTree, Search, Filter, RefreshCw,
   Edit2, Trash2, Eye, EyeOff, Sparkles, CheckCircle2,
-  XCircle, LogOut, Key, Globe, ExternalLink, Download, Upload
+  XCircle, LogOut, Key, Globe, ExternalLink, Download, Upload,
+  Handshake
 } from 'lucide-react';
 import type { Product, Category, AdminStats as AdminStatsType, PageRoute } from '../types/index.js';
 import { api } from '../services/api.js';
@@ -11,6 +11,7 @@ import { useToast } from '../context/ToastContext.js';
 import { AdminStats } from '../components/admin/AdminStats.js';
 import { ProductFormModal } from '../components/admin/ProductFormModal.js';
 import { CategoryManagerModal } from '../components/admin/CategoryManagerModal.js';
+import { PartnershipManagerModal } from '../components/admin/PartnershipManagerModal.js';
 import { ChangePasswordModal } from '../components/admin/ChangePasswordModal.js';
 import { ConfirmDialog } from '../components/ui/ConfirmDialog.js';
 import { formatVND } from '../utils/formatters.js';
@@ -38,6 +39,7 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+  const [isPartnershipModalOpen, setIsPartnershipModalOpen] = useState(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
 
   // Delete product confirm
@@ -271,6 +273,14 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
             >
               <FolderTree className="w-4 h-4 text-amber-700 shrink-0" />
               <span className="truncate">Danh Mục</span>
+            </button>
+
+            <button
+              onClick={() => setIsPartnershipModalOpen(true)}
+              className="flex-1 sm:flex-none px-3.5 sm:px-4 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-300 font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer active:scale-95"
+            >
+              <Handshake className="w-4 h-4 text-emerald-700 shrink-0" />
+              <span className="truncate">Hợp Tác Trại Ong</span>
             </button>
 
             <button
@@ -629,6 +639,15 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
         onClose={() => setIsCategoryModalOpen(false)}
         categories={categories}
         onRefresh={loadData}
+      />
+
+      {/* Partnership Programs Manager Modal */}
+      <PartnershipManagerModal
+        isOpen={isPartnershipModalOpen}
+        onClose={() => {
+          setIsPartnershipModalOpen(false);
+          loadData();
+        }}
       />
 
       {/* Change Password Modal */}

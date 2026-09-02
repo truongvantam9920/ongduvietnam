@@ -3,6 +3,7 @@ import type { Product, PageRoute } from '../types/index.js';
 import { api } from '../services/api.js';
 import { HeroSection } from '../components/home/HeroSection.js';
 import { FeaturedProductsSection } from '../components/home/FeaturedProductsSection.js';
+import { PartnershipSection } from '../components/home/PartnershipSection.js';
 import { AboutSection } from '../components/home/AboutSection.js';
 import { ComparisonSection } from '../components/home/ComparisonSection.js';
 import { BenefitsSection } from '../components/home/BenefitsSection.js';
@@ -53,7 +54,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         onNavigate={onNavigate}
       />
 
-      {/* 3. About Ong Dú (Meliponini & Cerumen) */}
+      {/* 3. Nationwide Bee Farm Partnership Section */}
+      <PartnershipSection onNavigate={onNavigate} />
+
+      {/* 4. About Ong Dú (Meliponini & Cerumen) */}
       <AboutSection />
 
       {/* 5. Comparison: Ong Dú vs Regular Honey */}

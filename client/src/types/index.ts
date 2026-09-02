@@ -48,6 +48,40 @@ export interface AdminStats {
   featuredProducts: number;
   outOfStockProducts: number;
   totalCategories: number;
+  totalPartnerships?: number;
+}
+
+export interface PartnershipProgram {
+  id: number;
+  title: string;
+  slug: string;
+  subtitle?: string;
+  summary: string;
+  content: string;
+  benefits: string[];
+  requirements?: string;
+  image_url: string;
+  contact_phone?: string;
+  contact_zalo?: string;
+  is_active: number; // 0 or 1
+  order_index: number;
+  created_at: string;
+  updated_at?: string;
+}
+
+export interface PartnershipFormData {
+  title: string;
+  slug?: string;
+  subtitle?: string;
+  summary: string;
+  content: string;
+  benefits?: string[];
+  requirements?: string;
+  image_url: string;
+  contact_phone?: string;
+  contact_zalo?: string;
+  is_active: boolean;
+  order_index?: number;
 }
 
 export interface ProductFormData {
@@ -71,3 +105,4 @@ export interface ProductFormData {
 }
 
 export type PageRoute = 'home' | 'products' | 'admin-login' | 'admin-dashboard';
+
