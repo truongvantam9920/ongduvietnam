@@ -291,49 +291,55 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
 
       {/* Main Content Area */}
       <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-5 sm:pt-8 space-y-6">
-        {/* Top Tab Switcher - Clean Segmented Control */}
-        <div className="bg-stone-200/80 p-1.5 rounded-2xl inline-flex flex-wrap items-center gap-1.5 shadow-inner border border-stone-300/80">
+        {/* Top Tab Switcher - High Contrast Responsive Grid */}
+        <div className="grid grid-cols-2 sm:flex sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
+          {/* Tab 1: Sản Phẩm */}
           <button
             type="button"
             onClick={() => setActiveTab('products')}
-            className={`flex items-center gap-2.5 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all cursor-pointer ${
+            className={`flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2.5 py-3 px-3 sm:px-6 rounded-2xl font-extrabold text-xs sm:text-sm transition-all cursor-pointer ${
               activeTab === 'products'
-                ? 'bg-white text-stone-950 shadow-sm border border-stone-300/90 scale-100'
-                : 'text-stone-600 hover:text-stone-950 hover:bg-white/50 border border-transparent'
+                ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/30 ring-2 ring-amber-500 scale-[1.02]'
+                : 'bg-white text-stone-700 hover:text-stone-950 hover:bg-amber-50/50 border-2 border-stone-200 shadow-xs'
             }`}
           >
-            <Package className={`w-4 h-4 ${activeTab === 'products' ? 'text-amber-600' : 'text-stone-400'}`} />
-            <span>Quản Lý Sản Phẩm</span>
+            <div className="flex items-center gap-2">
+              <Package className={`w-4 h-4 sm:w-5 sm:h-5 ${activeTab === 'products' ? 'text-white' : 'text-amber-600'}`} />
+              <span className="truncate">Quản Lý Sản Phẩm</span>
+            </div>
             <span
-              className={`px-2 py-0.5 rounded-md text-[11px] font-extrabold ${
+              className={`px-2.5 py-0.5 rounded-full text-[11px] font-black ${
                 activeTab === 'products'
-                  ? 'bg-amber-100 text-amber-900 border border-amber-300'
-                  : 'bg-stone-300/80 text-stone-700'
+                  ? 'bg-amber-950/60 text-amber-200 border border-amber-400/40'
+                  : 'bg-amber-100 text-amber-900 border border-amber-300'
               }`}
             >
-              {products.length}
+              {products.length} SP
             </span>
           </button>
 
+          {/* Tab 2: Hợp Tác */}
           <button
             type="button"
             onClick={() => setActiveTab('partnerships')}
-            className={`flex items-center gap-2.5 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all cursor-pointer ${
+            className={`flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2.5 py-3 px-3 sm:px-6 rounded-2xl font-extrabold text-xs sm:text-sm transition-all cursor-pointer ${
               activeTab === 'partnerships'
-                ? 'bg-white text-stone-950 shadow-sm border border-stone-300/90 scale-100'
-                : 'text-stone-600 hover:text-stone-950 hover:bg-white/50 border border-transparent'
+                ? 'bg-[#0e2c20] text-amber-300 shadow-lg shadow-emerald-950/30 ring-2 ring-emerald-500 scale-[1.02]'
+                : 'bg-white text-stone-700 hover:text-stone-950 hover:bg-emerald-50/50 border-2 border-stone-200 shadow-xs'
             }`}
           >
-            <Handshake className={`w-4 h-4 ${activeTab === 'partnerships' ? 'text-emerald-700' : 'text-stone-400'}`} />
-            <span>Hợp Tác Trại Ong</span>
+            <div className="flex items-center gap-2">
+              <Handshake className={`w-4 h-4 sm:w-5 sm:h-5 ${activeTab === 'partnerships' ? 'text-amber-300' : 'text-emerald-700'}`} />
+              <span className="truncate">Hợp Tác Trại Ong</span>
+            </div>
             <span
-              className={`px-2 py-0.5 rounded-md text-[11px] font-extrabold ${
+              className={`px-2.5 py-0.5 rounded-full text-[11px] font-black ${
                 activeTab === 'partnerships'
-                  ? 'bg-emerald-100 text-emerald-900 border border-emerald-300'
-                  : 'bg-stone-300/80 text-stone-700'
+                  ? 'bg-amber-400 text-stone-950 shadow-xs'
+                  : 'bg-emerald-100 text-emerald-900 border border-emerald-300'
               }`}
             >
-              {partnerships.length}
+              {partnerships.length} Bài
             </span>
           </button>
         </div>
