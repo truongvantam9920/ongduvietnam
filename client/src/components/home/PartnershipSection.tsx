@@ -179,11 +179,7 @@ export const PartnershipSection: React.FC<PartnershipSectionProps> = () => {
                 </div>
               ))}
             </div>
-          ) : (
-            <div className="p-8 rounded-3xl bg-[#092218]/60 border border-[#1b4b38] text-center text-stone-400 text-sm">
-              Hiện tại các chương trình liên kết đang được cập nhật. Vui lòng liên hệ Hotline/Zalo để nhận hồ sơ hợp tác.
-            </div>
-          )}
+          ) : null}
         </div>
 
         {/* Bottom Contact Callout Banner */}
