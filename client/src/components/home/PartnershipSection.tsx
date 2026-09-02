@@ -41,91 +41,55 @@ export const PartnershipSection: React.FC<PartnershipSectionProps> = () => {
     };
   }, []);
 
-  const coreBenefits = [
-    {
-      icon: TrendingUp,
-      title: 'Bao Tiêu Đầu Ra 100%',
-      desc: 'Ký hợp đồng dài hạn thu mua định kỳ toàn bộ sản lượng mật ong dú và keo ong nguyên chất với mức giá bảo hộ ổn định.',
-      tag: 'Cam kết hợp đồng',
-    },
-    {
-      icon: Sparkles,
-      title: 'Cung Cấp Giống F1 Khỏe Mạnh',
-      desc: 'Đàn giống Tetragonula thuần hóa, chúa tơ đẻ tốt, quân đông và khả năng kháng bệnh tự nhiên vượt trội.',
-      tag: 'Chuẩn giống F1',
-    },
-    {
-      icon: ShieldCheck,
-      title: 'Chuyển Giao Thùng Nuôi Sinh Thái',
-      desc: 'Thiết kế thùng 2-3 tầng thông minh chống nóng, dễ quan sát kết hợp máy hút mật vô trùng bảo vệ ấu trùng.',
-      tag: 'Kỹ thuật chuẩn khoa học',
-    },
-    {
-      icon: Handshake,
-      title: 'Đồng Hành Kỹ Thuật Trọn Đời',
-      desc: 'Đội ngũ chuyên gia ong học hướng dẫn tận vườn, hỗ trợ nhân giống chia đàn và kiểm định chất lượng mật 24/7.',
-      tag: 'Hỗ trợ 24/7',
-    },
-  ];
-
   return (
-    <section id="partnership" className="py-20 sm:py-28 bg-[#06150f] text-stone-100 relative overflow-hidden border-t border-[#1a4a37]/60">
+    <section id="partnership" className="py-20 sm:py-28 bg-[#06150f] relative overflow-hidden border-t border-[#1a4a37]/60 text-stone-100">
       {/* Background ambient lighting */}
       <div className="absolute top-1/4 -left-32 w-96 h-96 bg-[#d49a2a]/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 -right-32 w-96 h-96 bg-[#18533c]/30 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-12 sm:space-y-16">
         {/* Section Header */}
-        <div className="max-w-4xl mx-auto text-center space-y-5">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0d2d20] border border-[#24674d] text-amber-300 text-xs font-semibold backdrop-blur-md shadow-lg">
+        <div className="max-w-5xl mx-auto text-center space-y-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#092218]/90 border border-[#d49a2a]/60 text-amber-300 text-xs font-semibold backdrop-blur-md shadow-xl">
             <Handshake className="w-3.5 h-3.5 text-amber-400" />
-            <span>Mở rộng mạng lưới nuôi ong dú sinh thái toàn quốc</span>
+            <span>Mô hình kinh tế nông nghiệp sinh thái bền vững • Ong Dú Việt Nam</span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight tracking-tight uppercase font-serif">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight tracking-tight uppercase font-serif drop-shadow-lg">
             Hợp Tác Liên Kết Phát Triển Mở Rộng Trại Nuôi Ong Dú Toàn Quốc <span className="text-gold-gradient whitespace-nowrap block sm:inline">Cùng Ong Dú Việt Nam</span>
           </h2>
 
-          <p className="text-sm sm:text-base text-stone-300 max-w-3xl mx-auto leading-relaxed">
-            Ong Dú Việt Nam trân trọng kính mời các chủ trang trại, nhà vườn sinh thái và đối tác đam mê nông nghiệp bền vững cùng liên kết xây dựng hệ sinh thái đàn ong dú bản địa, tạo nguồn thu nhập kinh tế cao và bảo tồn đa dạng sinh học.
-          </p>
-        </div>
+          {/* Showcase Farm Banner Image */}
+          <div className="relative aspect-16/9 sm:aspect-21/9 rounded-3xl overflow-hidden border border-[#d49a2a]/40 shadow-2xl shadow-black/60 group mt-4">
+            <img
+              src="/images/farm-banner.jpg"
+              alt="Mô hình trang trại nuôi ong dú sinh thái Ong Dú Việt Nam"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+            {/* Ambient vignette overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#040f0a]/90 via-transparent to-black/20" />
 
-        {/* 4 Core Benefits Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {coreBenefits.map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={idx}
-                className="p-6 rounded-3xl bg-[#092218]/90 border border-[#1d5740]/80 hover:border-[#d49a2a]/60 transition-all duration-300 shadow-xl hover:-translate-y-1 flex flex-col justify-between group"
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 rounded-2xl bg-[#14412f] border border-[#2d7758] flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
-                      <Icon className="w-6 h-6" />
-                    </div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-300 bg-emerald-950/80 px-2.5 py-1 rounded-full border border-emerald-800/60">
-                      {item.tag}
-                    </span>
-                  </div>
-
-                  <h3 className="text-base sm:text-lg font-bold text-white font-serif group-hover:text-amber-300 transition-colors">
-                    {item.title}
-                  </h3>
-
-                  <p className="text-xs text-stone-300 leading-relaxed">
-                    {item.desc}
-                  </p>
-                </div>
+            {/* Bottom floating badge on image */}
+            <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-2xl bg-[#092218]/90 backdrop-blur-md border border-[#24674d]/80 text-left">
+              <div>
+                <span className="text-xs sm:text-sm font-bold text-white font-serif block">
+                  Trang Trại Nuôi Ong Dú Sinh Thái Bản Địa • Khánh Hòa, Việt Nam
+                </span>
+                <span className="text-[11px] text-emerald-300">
+                  Hệ thống thùng nuôi thông minh dưới tán rừng & vườn cây ăn trái đa tầng sinh thái
+                </span>
               </div>
-            );
-          })}
+              <div className="flex items-center gap-2 text-[11px] font-bold text-amber-300 bg-amber-950/80 px-3 py-1.5 rounded-xl border border-amber-600/60 shrink-0">
+                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                <span>Tiêu Chuẩn Nông Nghiệp Hữu Cơ</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Published Partnership Programs / Articles */}
         <div className="space-y-8">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#1b4b38] pb-4">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#235e46]/80 pb-4">
             <div>
               <span className="text-xs uppercase font-bold tracking-widest text-amber-400">
                 Chương Trình & Chính Sách
@@ -134,7 +98,7 @@ export const PartnershipSection: React.FC<PartnershipSectionProps> = () => {
                 Các Gói Hợp Tác Trọng Điểm Đang Triển Khai
               </h3>
             </div>
-            <span className="text-xs text-stone-400">
+            <span className="text-xs text-emerald-300 font-medium">
               Cập nhật trực tiếp từ Ban Điều Hành Ong Dú Việt Nam
             </span>
           </div>
