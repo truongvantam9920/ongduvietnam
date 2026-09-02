@@ -75,7 +75,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentRoute, onNavigate }) => {
                 <span className="text-sm sm:text-lg font-extrabold tracking-tight text-white group-hover:text-amber-300 transition-colors">
                   Ong Dú
                 </span>
-                <span className="text-xs sm:text-lg italic text-amber-400 font-serif">
+                <span className="text-xs sm:text-lg font-extrabold tracking-tight text-amber-400 group-hover:text-amber-300 transition-colors">
                   Việt Nam
                 </span>
               </div>

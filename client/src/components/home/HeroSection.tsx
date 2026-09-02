@@ -110,23 +110,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
         {/* Main Hero Header */}
         <div className="max-w-4xl mx-auto space-y-8 text-center bg-[#071a13]/60 sm:bg-[#071a13]/50 backdrop-blur-md p-6 sm:p-10 md:p-12 rounded-3xl border border-[#24674d]/50 shadow-2xl">
           {/* Top Brand Subtitle Tag */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-2 sm:py-1.5 rounded-2xl sm:rounded-full bg-[#0d2d20]/95 border border-[#24674d] text-[#d1fae5] text-xs font-semibold backdrop-blur-md shadow-lg text-center">
+          <div className="inline-flex items-center gap-2 px-3.5 sm:px-5 py-2 sm:py-1.5 rounded-2xl sm:rounded-full bg-[#0d2d20]/95 border border-[#24674d] text-[#d1fae5] text-xs font-semibold backdrop-blur-md shadow-lg text-center">
             <span className="relative flex h-2 w-2 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d49a2a] opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#d49a2a]"></span>
             </span>
-            <span className="leading-snug">
-              Hệ sinh thái mật ong dú nguyên bản <span className="hidden sm:inline">•</span><br className="sm:hidden" /> <strong className="text-amber-300 font-bold">Ong Dú Việt Nam</strong>
+            <span className="leading-snug text-[11px] sm:text-xs">
+              Bảo Tồn - Nhân Nuôi - Thụ Phấn - Nghiên Cứu - Sản Phẩm Ong Không Ngòi Đốt
             </span>
           </div>
 
           {/* Headline */}
-          <h1 className="text-[20px] xs:text-[22px] sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight sm:leading-[1.15] tracking-tight drop-shadow-lg font-serif">
+          <h1 className="text-2xl xs:text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight sm:leading-[1.15] tracking-tight drop-shadow-lg font-serif">
             <span className="block whitespace-nowrap">
               Mật Ong Dú <span className="text-gold-gradient">Thượng Hạng</span>
             </span>
-            <span className="block whitespace-nowrap text-[16px] xs:text-[18px] sm:text-4xl lg:text-5xl text-stone-100 font-sans font-bold mt-1 sm:mt-2">
-              Từ Thiên Nhiên Rừng Bản Địa
+            <span className="block whitespace-nowrap text-xl xs:text-2xl sm:text-4xl lg:text-5xl text-stone-100 font-sans font-bold mt-1 sm:mt-2">
+              Từ Thiên Nhiên
             </span>
           </h1>
 

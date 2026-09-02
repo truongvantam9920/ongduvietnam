@@ -402,6 +402,9 @@ class JsonStore {
       price: updates.price !== undefined ? Number(updates.price) : current.price,
       original_price: updates.original_price !== undefined ? (updates.original_price ? Number(updates.original_price) : null) : current.original_price,
       additional_images: Array.isArray(updates.additional_images) ? updates.additional_images : current.additional_images,
+      is_featured: updates.is_featured !== undefined ? (updates.is_featured ? 1 : 0) : current.is_featured,
+      is_active: updates.is_active !== undefined ? (updates.is_active ? 1 : 0) : current.is_active,
+      in_stock: updates.in_stock !== undefined ? (updates.in_stock ? 1 : 0) : current.in_stock,
       updated_at: new Date().toISOString(),
     };
 
