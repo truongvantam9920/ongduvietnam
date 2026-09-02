@@ -4,6 +4,7 @@ import { ZaloIcon } from '../ui/ZaloIcon.js';
 import { CONTACT_INFO } from '../../constants/contact.js';
 import type { Product } from '../../types/index.js';
 import { Modal } from '../ui/Modal.js';
+import { RichText } from '../ui/RichText.js';
 import { StockBadge, RatingBadge, FeaturedBadge } from '../ui/Badge.js';
 import { formatVND } from '../../utils/formatters.js';
 
@@ -196,7 +197,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             {/* Tab content area */}
             <div className="text-xs sm:text-sm text-stone-600 max-h-48 overflow-y-auto pr-2 leading-relaxed space-y-2">
               {activeTab === 'desc' && (
-                <div className="whitespace-pre-line">{product.description || product.short_description}</div>
+                <RichText content={product.description || product.short_description} />
               )}
               {activeTab === 'ingredients' && (
                 <div className="p-3 bg-stone-50 rounded-xl border border-stone-200/60 flex items-start gap-2">

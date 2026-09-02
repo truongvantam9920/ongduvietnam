@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { ZaloIcon } from '../ui/ZaloIcon.js';
 import { Modal } from '../ui/Modal.js';
+import { RichText } from '../ui/RichText.js';
 import { api } from '../../services/api.js';
 import { CONTACT_INFO } from '../../constants/contact.js';
 import type { PartnershipProgram } from '../../types/index.js';
@@ -275,8 +276,8 @@ export const PartnershipSection: React.FC<PartnershipSectionProps> = () => {
                 <FileText className="w-4 h-4 text-amber-600" />
                 <span>Nội Dung Chi Tiết Chương Trình</span>
               </h4>
-              <div className="text-stone-700 text-xs sm:text-sm leading-relaxed whitespace-pre-line bg-white p-4 rounded-2xl border border-stone-200">
-                {selectedProgram.content}
+              <div className="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 shadow-2xs">
+                <RichText content={selectedProgram.content} />
               </div>
             </div>
 
