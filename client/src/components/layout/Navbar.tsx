@@ -71,11 +71,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentRoute, onNavigate }) => {
 
             {/* Typography */}
             <div className="leading-tight">
-              <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-1.5">
-                <span className="text-sm sm:text-lg font-extrabold tracking-tight text-white group-hover:text-amber-300 transition-colors">
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-base sm:text-lg font-extrabold tracking-tight text-white group-hover:text-amber-300 transition-colors">
                   Ong Dú
                 </span>
-                <span className="text-xs sm:text-lg font-extrabold tracking-tight text-amber-400 group-hover:text-amber-300 transition-colors">
+                <span className="text-base sm:text-lg font-extrabold tracking-tight text-amber-400 group-hover:text-amber-300 transition-colors">
                   Việt Nam
                 </span>
               </div>
