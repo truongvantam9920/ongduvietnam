@@ -24,6 +24,15 @@ authRouter.post('/login', loginRateLimiter, (req, res) => {
     return;
   }
 
+  // Chống DoS: Giới hạn độ dài đầu vào để tránh attacker gửi chuỗi quá dài làm nghẽn CPU bcrypt
+  if (username.length > 50 || password.length > 100) {
+    res.status(400).json({
+      success: false,
+      message: 'Dữ liệu đăng nhập vượt quá độ dài cho phép.',
+    });
+    return;
+  }
+
   const admin = store.getAdminUser();
   const isUsernameMatch = username === admin.username;
 
