@@ -48,15 +48,16 @@ Dự án được xây dựng theo kiến trúc **Monolith hiện đại**, kế
 
 ---
 
-## 🔑 Thông Tin Tài Khoản Quản Trị Mặc Định
+## 🔑 Tài Khoản Quản Trị Hệ Thống
 
-| Thông tin | Giá trị |
+| Thông tin | Cấu hình |
 |---|---|
 | **Đường dẫn trang quản trị** | `/admin` (hoặc click icon khóa ở chân trang web) |
-| **Tên đăng nhập (Username)** | `admin` |
-| **Mật khẩu (Password)** | `your_secure_password_here` |
+| **Tên đăng nhập** | Cấu hình qua biến `ADMIN_USERNAME` trong file `.env` |
+| **Mật khẩu** | Cấu hình qua biến `ADMIN_PASSWORD` trong file `.env` |
 
-*(Bạn có thể thay đổi mật khẩu trong mục "Đổi mật khẩu" tại Trang quản trị).*
+> [!TIP]
+> Không bao giờ commit mật khẩu hoặc file `.env` chứa khóa bí mật lên kho lưu trữ mã nguồn công khai (GitHub).
 
 ---
 

@@ -110,7 +110,9 @@ class JsonStore {
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
       }
-      fs.writeFileSync(this.filePath, JSON.stringify(this.data, null, 2), 'utf-8');
+      // Never persist sensitive admin credentials to the version-controlled JSON catalog
+      const { admin: _, ...publicCatalog } = this.data;
+      fs.writeFileSync(this.filePath, JSON.stringify(publicCatalog, null, 2), 'utf-8');
     } catch (err) {
       console.warn('[JsonStore] Warning: Could not write file (e.g. read-only filesystem), keeping in-memory:', err);
     }
