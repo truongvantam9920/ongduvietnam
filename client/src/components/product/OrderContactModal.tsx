@@ -5,6 +5,7 @@ import { CONTACT_INFO } from '../../constants/contact.js';
 import { Modal } from '../ui/Modal.js';
 import { formatVND } from '../../utils/formatters.js';
 import { useToast } from '../../context/ToastContext.js';
+import type { Product } from '../../types/index.js';
 
 interface OrderContactModalProps {
   product: Product | null;

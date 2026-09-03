@@ -1,4 +1,4 @@
-import type { Product, Category, User, AdminStats, ProductFormData } from '../types/index.js';
+import type { Product, Category, User, AdminStats, ProductFormData, PartnershipProgram, PartnershipFormData } from '../types/index.js';
 
 const API_BASE = '/api';
 
