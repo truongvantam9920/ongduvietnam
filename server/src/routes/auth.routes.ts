@@ -4,12 +4,17 @@ import jwt from 'jsonwebtoken';
 import { store } from '../db/store.js';
 import { config } from '../config.js';
 import { requireAuth, type AuthRequest } from '../middleware/auth.js';
+import { loginRateLimiter, recordFailedAttempt, resetAttempts, getClientIp } from '../middleware/rateLimiter.js';
 
 export const authRouter = Router();
 
+// Dummy constant hash with cost factor 10 to ensure timing is identical when username doesn't exist
+const TIMING_SAFE_DUMMY_HASH = '$2b$10$e8iVw6wWbT8Xm/m12.3cvew4o1r9E8L6jI7jR.E3q9m8w6wWbT8Xm';
+
 // POST /api/auth/login
-authRouter.post('/login', (req, res) => {
+authRouter.post('/login', loginRateLimiter, (req, res) => {
   const { username, password } = req.body;
+  const clientIp = getClientIp(req);
 
   if (!username || !password || typeof username !== 'string' || typeof password !== 'string') {
     res.status(400).json({
@@ -20,23 +25,27 @@ authRouter.post('/login', (req, res) => {
   }
 
   const admin = store.getAdminUser();
+  const isUsernameMatch = username === admin.username;
 
-  if (username !== admin.username) {
+  // Run bcrypt verification regardless of username match to prevent timing attacks
+  const hashToCompare = isUsernameMatch ? admin.password_hash : TIMING_SAFE_DUMMY_HASH;
+  const isPasswordValid = bcrypt.compareSync(password, hashToCompare);
+
+  if (!isUsernameMatch || !isPasswordValid) {
+    const { remaining, isBlocked } = recordFailedAttempt(clientIp);
+    const warning = isBlocked
+      ? ' Hệ thống đã tạm khóa tính năng đăng nhập trong 15 phút để bảo vệ an toàn.'
+      : ` (Còn ${remaining} lần thử trước khi bị tạm khóa)`;
+
     res.status(401).json({
       success: false,
-      message: 'Tên đăng nhập hoặc mật khẩu không chính xác.',
+      message: `Tên đăng nhập hoặc mật khẩu không chính xác.${warning}`,
     });
     return;
   }
 
-  const isPasswordValid = bcrypt.compareSync(password, admin.password_hash);
-  if (!isPasswordValid) {
-    res.status(401).json({
-      success: false,
-      message: 'Tên đăng nhập hoặc mật khẩu không chính xác.',
-    });
-    return;
-  }
+  // Đăng nhập thành công -> Reset bộ đếm thử sai của IP này
+  resetAttempts(clientIp);
 
   // Generate JWT token
   const token = jwt.sign(
