@@ -392,8 +392,20 @@ class JsonStore {
   }
 
   getFeaturedProducts(limit = 6): Product[] {
-    const { products } = this.getProducts({ featured: true, limit, all: false });
-    return products;
+    this.ensureFresh();
+    const { products: featured } = this.getProducts({ featured: true, limit, all: false });
+    if (featured.length >= limit) return featured;
+    const { products: all } = this.getProducts({ all: false, limit });
+    const seen = new Set(featured.map((p) => p.id));
+    const result = [...featured];
+    for (const p of all) {
+      if (!seen.has(p.id)) {
+        result.push(p);
+        seen.add(p.id);
+        if (result.length >= limit) break;
+      }
+    }
+    return result;
   }
 
   createProduct(productData: any): Product {

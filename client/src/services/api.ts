@@ -325,10 +325,24 @@ export const api = {
   },
 
   async getFeaturedProducts(): Promise<{ success: boolean; data: Product[] }> {
-    const res = await this.getProducts({ featured: true, limit: 6, all: false });
+    const featRes = await this.getProducts({ featured: true, limit: 12, all: false });
+    const featured = featRes.data;
+
+    const allRes = await this.getProducts({ all: false, limit: 12 });
+    const all = allRes.data;
+
+    const seen = new Set(featured.map((p) => p.id));
+    const combined = [...featured];
+    for (const p of all) {
+      if (!seen.has(p.id)) {
+        combined.push(p);
+        seen.add(p.id);
+      }
+    }
+
     return {
       success: true,
-      data: res.data,
+      data: combined,
     };
   },
 

@@ -34,7 +34,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
   const [volume, setVolume] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [additionalImages, setAdditionalImages] = useState<string[]>([]);
-  const [isFeatured, setIsFeatured] = useState(false);
+  const [isFeatured, setIsFeatured] = useState(true);
   const [isActive, setIsActive] = useState(true);
   const [inStock, setInStock] = useState(true);
   const [origin, setOrigin] = useState('Vườn ong dú Suối Cát, Cam Lâm, Khánh Hòa');
@@ -93,7 +93,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
       setVolume('250ml');
       setImageUrl('');
       setAdditionalImages([]);
-      setIsFeatured(false);
+      setIsFeatured(true);
       setIsActive(true);
       setInStock(true);
       setOrigin('Vườn ong dú Suối Cát, Cam Lâm, Khánh Hòa');
