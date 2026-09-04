@@ -18,6 +18,6 @@ export const config = {
   },
   uploadDir: process.env.VERCEL
     ? '/tmp/uploads'
-    : path.resolve(process.cwd(), 'client/public/images/uploads'),
+    : path.resolve(process.cwd(), 'uploads'),
 };
 

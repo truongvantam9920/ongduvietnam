@@ -241,7 +241,14 @@ export const PartnershipFormModal: React.FC<PartnershipFormModalProps> = ({
             <div className="relative w-32 h-24 rounded-2xl bg-white border border-stone-300 overflow-hidden shrink-0 flex items-center justify-center shadow-xs">
               {imageUrl ? (
                 <>
-                  <img src={imageUrl} alt="Ảnh chương trình" className="w-full h-full object-cover" />
+                  <img
+                    src={imageUrl}
+                    alt="Ảnh chương trình"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/images/product-hive-box.jpg';
+                    }}
+                  />
                   <button
                     type="button"
                     onClick={() => setImageUrl('')}

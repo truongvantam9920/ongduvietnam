@@ -17,38 +17,36 @@ function saveLocalFile(file: Express.Multer.File): string {
 
   const uniqueFileName = `upload-${baseName}-${Date.now()}-${Math.round(Math.random() * 1e4)}${ext}`;
 
-  // 1. Primary target: client/public/images
-  const clientPublicImagesDir = path.resolve(process.cwd(), 'client/public/images');
-  try {
-    if (!fs.existsSync(clientPublicImagesDir)) {
-      fs.mkdirSync(clientPublicImagesDir, { recursive: true });
+  const targetDirs = [
+    config.uploadDir,
+    path.resolve(process.cwd(), 'uploads'),
+  ];
+
+  let saved = false;
+  for (const dir of targetDirs) {
+    try {
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
+      const dest = path.join(dir, uniqueFileName);
+      fs.writeFileSync(dest, file.buffer);
+      saved = true;
+    } catch (err) {
+      console.warn(`[Upload] Could not write to ${dir}:`, err);
     }
-    const publicPath = path.join(clientPublicImagesDir, uniqueFileName);
-    fs.writeFileSync(publicPath, file.buffer);
-  } catch (err) {
-    console.warn('[Upload] Failed saving to client/public/images:', err);
   }
 
-  // 2. Also save to dist/client/images if exists so production server serves it immediately without rebuild
-  const distClientImagesDir = path.resolve(process.cwd(), 'dist/client/images');
-  try {
-    if (fs.existsSync(distClientImagesDir)) {
-      const distPath = path.join(distClientImagesDir, uniqueFileName);
-      fs.writeFileSync(distPath, file.buffer);
-    }
-  } catch {}
-
-  // 3. Fallback to uploads dir if configured
-  try {
-    if (config.uploadDir && config.uploadDir !== clientPublicImagesDir) {
-      if (!fs.existsSync(config.uploadDir)) {
-        fs.mkdirSync(config.uploadDir, { recursive: true });
+  if (!saved && process.env.VERCEL) {
+    try {
+      const tmpDir = '/tmp/uploads';
+      if (!fs.existsSync(tmpDir)) {
+        fs.mkdirSync(tmpDir, { recursive: true });
       }
-      fs.writeFileSync(path.join(config.uploadDir, uniqueFileName), file.buffer);
-    }
-  } catch {}
+      fs.writeFileSync(path.join(tmpDir, uniqueFileName), file.buffer);
+    } catch {}
+  }
 
-  return `/images/${uniqueFileName}`;
+  return `/uploads/${uniqueFileName}`;
 }
 
 // POST /api/upload - Single image local upload

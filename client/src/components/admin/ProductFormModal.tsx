@@ -66,10 +66,16 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
       setPreservation(productToEdit.preservation || '');
 
       if (productToEdit.additional_images) {
-        try {
-          const parsed = JSON.parse(productToEdit.additional_images);
-          setAdditionalImages(Array.isArray(parsed) ? parsed.slice(0, 3) : []);
-        } catch {
+        if (Array.isArray(productToEdit.additional_images)) {
+          setAdditionalImages(productToEdit.additional_images.slice(0, 3));
+        } else if (typeof productToEdit.additional_images === 'string') {
+          try {
+            const parsed = JSON.parse(productToEdit.additional_images);
+            setAdditionalImages(Array.isArray(parsed) ? parsed.slice(0, 3) : []);
+          } catch {
+            setAdditionalImages([]);
+          }
+        } else {
           setAdditionalImages([]);
         }
       } else {
@@ -340,7 +346,14 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
               <div className="relative w-24 h-24 rounded-2xl bg-white border border-stone-300 overflow-hidden shrink-0 flex items-center justify-center shadow-xs">
                 {imageUrl ? (
                   <>
-                    <img src={imageUrl} alt="Ảnh đại diện" className="w-full h-full object-cover" />
+                    <img
+                      src={imageUrl}
+                      alt="Ảnh đại diện"
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = '/images/product-honey-bottle.jpg';
+                      }}
+                    />
                     <button
                       type="button"
                       onClick={() => setImageUrl('')}
@@ -442,7 +455,14 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
                     key={idx}
                     className="relative group w-20 h-20 rounded-2xl overflow-hidden border-2 border-stone-200 bg-white shadow-xs"
                   >
-                    <img src={img} alt={`Ảnh phụ ${idx + 1}`} className="w-full h-full object-cover" />
+                    <img
+                      src={img}
+                      alt={`Ảnh phụ ${idx + 1}`}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = '/images/product-honey-bottle.jpg';
+                      }}
+                    />
                     <span className="absolute bottom-1 left-1 px-1.5 py-0.5 bg-black/60 text-white text-[9px] font-bold rounded-md">
                       #{idx + 1}
                     </span>

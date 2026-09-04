@@ -503,6 +503,9 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
                             src={product.image_url}
                             alt={product.name}
                             className="w-14 h-14 rounded-xl object-cover border border-stone-200 bg-stone-50 shadow-2xs"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = '/images/product-honey-bottle.jpg';
+                            }}
                           />
                         </td>
 
@@ -692,6 +695,9 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
                               src={prog.image_url || '/images/product-hive-box.jpg'}
                               alt={prog.title}
                               className="w-full h-full object-cover"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).src = '/images/product-hive-box.jpg';
+                              }}
                             />
                           </div>
                         </td>

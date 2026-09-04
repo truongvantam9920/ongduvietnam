@@ -285,6 +285,25 @@
       "is_active": 1,
       "order_index": 2,
       "created_at": "2026-09-01T00:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "title": "Chương Trình Hợp Tác Trang Trại Test",
+      "slug": "chuong-trinh-hop-tac-trang-trai-test",
+      "summary": "Tóm tắt chương trình test",
+      "content": "Nội dung chi tiết chương trình test",
+      "benefits": [
+        "Bao tiêu sản phẩm",
+        "Hỗ trợ kỹ thuật nhân đàn"
+      ],
+      "requirements": "Khu vực có nguồn hoa phong phú",
+      "image_url": "/uploads/upload-bee-test-1788490156067-5831.png",
+      "contact_phone": "0987654321",
+      "contact_zalo": "0987654321",
+      "is_active": 0,
+      "order_index": 99,
+      "created_at": "2026-09-04T02:49:16.089Z",
+      "updated_at": "2026-09-04T02:49:16.092Z"
     }
   ]
 }

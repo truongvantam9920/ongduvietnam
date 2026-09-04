@@ -126,6 +126,9 @@ export const PartnershipSection: React.FC<PartnershipSectionProps> = () => {
                       src={prog.image_url || '/images/product-hive-box.jpg'}
                       alt={prog.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = '/images/product-hive-box.jpg';
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#092218] via-transparent to-transparent md:hidden" />
                   </div>
@@ -236,6 +239,9 @@ export const PartnershipSection: React.FC<PartnershipSectionProps> = () => {
                   src={selectedProgram.image_url}
                   alt={selectedProgram.title}
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/images/product-hive-box.jpg';
+                  }}
                 />
               </div>
             )}

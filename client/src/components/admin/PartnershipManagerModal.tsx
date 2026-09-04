@@ -135,6 +135,9 @@ export const PartnershipManagerModal: React.FC<PartnershipManagerModalProps> = (
                             src={prog.image_url || '/images/product-hive-box.jpg'}
                             alt={prog.title}
                             className="w-full h-full object-cover"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = '/images/product-hive-box.jpg';
+                            }}
                           />
                         </div>
                       </td>

@@ -39,7 +39,35 @@ const clientPublicPath = path.resolve(process.cwd(), 'client/public');
 if (fs.existsSync(clientPublicPath)) {
   app.use(express.static(clientPublicPath));
 }
+try {
+  if (!fs.existsSync(config.uploadDir)) {
+    fs.mkdirSync(config.uploadDir, { recursive: true });
+  }
+} catch {}
+
 app.use('/uploads', express.static(config.uploadDir));
+const fallbackUploadsDir = path.resolve(process.cwd(), 'uploads');
+if (fallbackUploadsDir !== config.uploadDir && fs.existsSync(fallbackUploadsDir)) {
+  app.use('/uploads', express.static(fallbackUploadsDir));
+}
+
+// Dynamic fallback for /uploads in serverless / multi-dir setups
+app.get('/uploads/:filename', (req, res, next) => {
+  const filename = path.basename(req.params.filename);
+  const candidatePaths = [
+    path.join(config.uploadDir, filename),
+    path.join(process.cwd(), 'uploads', filename),
+    path.join('/tmp/uploads', filename),
+    path.join(process.cwd(), 'client/public/images', filename),
+  ];
+
+  for (const filePath of candidatePaths) {
+    if (fs.existsSync(filePath)) {
+      return res.sendFile(filePath);
+    }
+  }
+  next();
+});
 
 // API Health check
 app.get('/api/health', (_req, res) => {

@@ -11,7 +11,7 @@ export interface Product {
   original_price: number | null;
   volume: string | null;
   image_url: string;
-  additional_images: string | null;
+  additional_images: string[] | string | null;
   is_featured: number; // 0 or 1
   is_active: number;   // 0 or 1
   in_stock: number;    // 0 or 1

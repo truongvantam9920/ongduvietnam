@@ -73,6 +73,9 @@ export const OrderContactModal: React.FC<OrderContactModalProps> = ({
               src={product.image_url}
               alt={product.name}
               className="w-16 h-16 rounded-xl object-cover border border-amber-200 shrink-0"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = '/images/product-honey-bottle.jpg';
+              }}
             />
             <div className="flex-1 min-w-0">
               <h4 className="text-sm font-bold text-stone-900 font-serif truncate">{product.name}</h4>

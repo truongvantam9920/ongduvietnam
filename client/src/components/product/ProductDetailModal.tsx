@@ -27,17 +27,23 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
   const allImages: string[] = [product.image_url];
   if (product.additional_images) {
-    try {
-      const parsed = JSON.parse(product.additional_images);
-      if (Array.isArray(parsed)) {
-        for (const img of parsed) {
-          if (typeof img === 'string' && img.trim() && !allImages.includes(img)) {
-            allImages.push(img);
-          }
-        }
+    const rawImages = Array.isArray(product.additional_images)
+      ? product.additional_images
+      : (typeof product.additional_images === 'string'
+        ? (() => {
+            try {
+              const p = JSON.parse(product.additional_images);
+              return Array.isArray(p) ? p : [];
+            } catch {
+              return [];
+            }
+          })()
+        : []);
+
+    for (const img of rawImages) {
+      if (typeof img === 'string' && img.trim() && !allImages.includes(img)) {
+        allImages.push(img);
       }
-    } catch {
-      // Ignore parse error
     }
   }
 
@@ -59,6 +65,9 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               src={currentImage}
               alt={product.name}
               className="w-full h-full object-cover"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = '/images/product-honey-bottle.jpg';
+              }}
             />
             {Boolean(product.is_featured) && (
               <div className="absolute top-3 left-3">
@@ -83,7 +92,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     currentImage === img ? 'border-amber-600 ring-2 ring-amber-300' : 'border-stone-200 opacity-70 hover:opacity-100'
                   }`}
                 >
-                  <img src={img} alt={`Ảnh ${idx + 1}`} className="w-full h-full object-cover" />
+                  <img
+                    src={img}
+                    alt={`Ảnh ${idx + 1}`}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/images/product-honey-bottle.jpg';
+                    }}
+                  />
                 </button>
               ))}
             </div>

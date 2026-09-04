@@ -40,7 +40,9 @@ class JsonStore {
   constructor() {
     const candidates = [
       path.resolve(process.cwd(), 'server/src/data/products.json'),
+      path.resolve(process.cwd(), 'data/products.json'),
       path.resolve(__dirname, '../data/products.json'),
+      path.resolve(__dirname, '../../data/products.json'),
     ];
 
     let found = '';
@@ -272,12 +274,20 @@ class JsonStore {
 
     if (options.search) {
       const q = options.search.toLowerCase().trim();
-      list = list.filter(
-        (p) =>
-          p.name.toLowerCase().includes(q) ||
-          (p.short_description || '').toLowerCase().includes(q) ||
-          (p.description || '').toLowerCase().includes(q)
-      );
+      const qNorm = slugify(q);
+      list = list.filter((p) => {
+        const name = p.name.toLowerCase();
+        const shortDesc = (p.short_description || '').toLowerCase();
+        const desc = (p.description || '').toLowerCase();
+        return (
+          name.includes(q) ||
+          shortDesc.includes(q) ||
+          desc.includes(q) ||
+          slugify(name).includes(qNorm) ||
+          slugify(shortDesc).includes(qNorm) ||
+          slugify(desc).includes(qNorm)
+        );
+      });
     }
 
     // Sort

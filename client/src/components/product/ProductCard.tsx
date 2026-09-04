@@ -28,6 +28,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           alt={product.name}
           className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
           loading="lazy"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = '/images/product-honey-bottle.jpg';
+          }}
         />
 
         <div className="absolute inset-0 bg-gradient-to-t from-[#06160f]/80 via-transparent to-black/20 opacity-60 group-hover:opacity-40 transition-opacity" />
