@@ -789,7 +789,12 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
           setIsProductModalOpen(false);
           setProductToEdit(null);
         }}
-        onSuccess={loadData}
+        onSuccess={() => {
+          setSelectedCategory('');
+          setStatusFilter('all');
+          setSearchQuery('');
+          loadData();
+        }}
         productToEdit={productToEdit}
         categories={categories}
       />

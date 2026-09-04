@@ -36,9 +36,11 @@ class JsonStore {
   private filePath: string;
   private data: CatalogData = { categories: [], products: [] };
   private initialized = false;
+  private lastMtime = 0;
 
   constructor() {
     const candidates = [
+      '/tmp/products.json',
       path.resolve(process.cwd(), 'server/src/data/products.json'),
       path.resolve(process.cwd(), 'data/products.json'),
       path.resolve(__dirname, '../data/products.json'),
@@ -48,8 +50,14 @@ class JsonStore {
     let found = '';
     for (const p of candidates) {
       if (fs.existsSync(p)) {
-        found = p;
-        break;
+        try {
+          const content = fs.readFileSync(p, 'utf-8');
+          const parsed = JSON.parse(content);
+          if (parsed && Array.isArray(parsed.products) && parsed.products.length > 0) {
+            found = p;
+            break;
+          }
+        } catch {}
       }
     }
 
@@ -57,10 +65,49 @@ class JsonStore {
     this.load();
   }
 
+  private ensureFresh(): void {
+    if (!this.initialized) {
+      this.load();
+      return;
+    }
+    const tmpPath = '/tmp/products.json';
+    if (fs.existsSync(tmpPath)) {
+      try {
+        const stats = fs.statSync(tmpPath);
+        if (stats.mtimeMs > this.lastMtime) {
+          this.load();
+        }
+      } catch {}
+    } else if (fs.existsSync(this.filePath)) {
+      try {
+        const stats = fs.statSync(this.filePath);
+        if (stats.mtimeMs > this.lastMtime) {
+          this.load();
+        }
+      } catch {}
+    }
+  }
+
   private load() {
+    // Check if /tmp/products.json exists and is newer or valid
+    const tmpPath = '/tmp/products.json';
+    let targetPath = this.filePath;
+
+    if (fs.existsSync(tmpPath)) {
+      try {
+        const tmpContent = fs.readFileSync(tmpPath, 'utf-8');
+        const parsedTmp = JSON.parse(tmpContent);
+        if (parsedTmp && Array.isArray(parsedTmp.products) && parsedTmp.products.length > 0) {
+          targetPath = tmpPath;
+        }
+      } catch {}
+    }
+
     try {
-      if (fs.existsSync(this.filePath)) {
-        const raw = fs.readFileSync(this.filePath, 'utf-8');
+      if (fs.existsSync(targetPath)) {
+        const stats = fs.statSync(targetPath);
+        this.lastMtime = stats.mtimeMs;
+        const raw = fs.readFileSync(targetPath, 'utf-8');
         const parsed = JSON.parse(raw);
         this.data = {
           categories: parsed.categories || [],
@@ -107,22 +154,30 @@ class JsonStore {
   }
 
   private save(): void {
+    const { admin: _, ...publicCatalog } = this.data;
+    const content = JSON.stringify(publicCatalog, null, 2);
+
+    // 1. Try writing to primary target
     try {
       const dir = path.dirname(this.filePath);
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
       }
-      // Never persist sensitive admin credentials to the version-controlled JSON catalog
-      const { admin: _, ...publicCatalog } = this.data;
-      fs.writeFileSync(this.filePath, JSON.stringify(publicCatalog, null, 2), 'utf-8');
+      fs.writeFileSync(this.filePath, content, 'utf-8');
+      this.lastMtime = fs.statSync(this.filePath).mtimeMs;
     } catch (err) {
-      console.warn('[JsonStore] Warning: Could not write file (e.g. read-only filesystem), keeping in-memory:', err);
+      console.warn(`[JsonStore] Notice: Primary path write skipped (${this.filePath}):`, err);
     }
+
+    // 2. Always persist to /tmp/products.json as writable fallback for serverless
+    try {
+      fs.writeFileSync('/tmp/products.json', content, 'utf-8');
+    } catch {}
   }
 
   // Admin User Auth
   getAdminUser(): User {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     return {
       id: 1,
       username: this.data.admin?.username || config.admin.username,
@@ -149,7 +204,7 @@ class JsonStore {
 
   // Categories
   getCategories(): (Category & { product_count: number })[] {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     return this.data.categories
       .slice()
       .sort((a, b) => (a.order_index || 0) - (b.order_index || 0))
@@ -165,17 +220,17 @@ class JsonStore {
   }
 
   getCategoryById(id: number): Category | undefined {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     return this.data.categories.find((c) => c.id === id);
   }
 
   getCategoryBySlug(slug: string): Category | undefined {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     return this.data.categories.find((c) => c.slug === slug);
   }
 
   createCategory(categoryData: Partial<Category>): Category {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     const maxId = this.data.categories.reduce((m, c) => Math.max(m, c.id || 0), 0);
     const newId = maxId + 1;
     const name = (categoryData.name || '').trim();
@@ -196,7 +251,7 @@ class JsonStore {
   }
 
   updateCategory(id: number, updates: Partial<Category>): Category | undefined {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     const idx = this.data.categories.findIndex((c) => c.id === id);
     if (idx === -1) return undefined;
 
@@ -218,7 +273,7 @@ class JsonStore {
   }
 
   deleteCategory(id: number): boolean {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     const initialLen = this.data.categories.length;
     this.data.categories = this.data.categories.filter((c) => c.id !== id);
 
@@ -243,7 +298,7 @@ class JsonStore {
     offset?: number;
     sort?: string;
   } = {}): { products: Product[]; total: number } {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     let list: Product[] = this.data.products.map((p) => {
       const cat = this.data.categories.find((c) => c.id === p.category_id || c.slug === p.category_slug);
       return {
@@ -311,7 +366,7 @@ class JsonStore {
   }
 
   getProductById(id: number): Product | undefined {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     const p = this.data.products.find((prod) => prod.id === id);
     if (!p) return undefined;
     const cat = this.data.categories.find((c) => c.id === p.category_id || c.slug === p.category_slug);
@@ -324,7 +379,7 @@ class JsonStore {
   }
 
   getProductBySlug(slug: string): Product | undefined {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     const p = this.data.products.find((prod) => prod.slug === slug);
     if (!p) return undefined;
     const cat = this.data.categories.find((c) => c.id === p.category_id || c.slug === p.category_slug);
@@ -342,7 +397,7 @@ class JsonStore {
   }
 
   createProduct(productData: any): Product {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     const maxId = this.data.products.reduce((m, p) => Math.max(m, p.id || 0), 0);
     const newId = maxId + 1;
     const name = (productData.name || '').trim();
@@ -388,7 +443,7 @@ class JsonStore {
   }
 
   updateProduct(id: number, updates: any): Product | undefined {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     const idx = this.data.products.findIndex((p) => p.id === id);
     if (idx === -1) return undefined;
 
@@ -426,7 +481,7 @@ class JsonStore {
   }
 
   toggleProduct(id: number, field: 'is_active' | 'is_featured' | 'in_stock'): Product | undefined {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     const idx = this.data.products.findIndex((p) => p.id === id);
     if (idx === -1) return undefined;
 
@@ -439,7 +494,7 @@ class JsonStore {
   }
 
   deleteProduct(id: number): Product | undefined {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     const idx = this.data.products.findIndex((p) => p.id === id);
     if (idx === -1) return undefined;
 
@@ -453,19 +508,19 @@ class JsonStore {
   // ==========================================
 
   getPartnerships(includeInactive = false): PartnershipProgram[] {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     const list = this.data.partnerships || [];
     const filtered = includeInactive ? list : list.filter((p) => p.is_active);
     return filtered.sort((a, b) => a.order_index - b.order_index);
   }
 
   getPartnershipById(id: number): PartnershipProgram | undefined {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     return (this.data.partnerships || []).find((p) => p.id === id);
   }
 
   createPartnership(input: PartnershipCreateInput): PartnershipProgram {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     if (!this.data.partnerships) this.data.partnerships = [];
 
     const nextId = this.data.partnerships.length > 0
@@ -514,7 +569,7 @@ class JsonStore {
   }
 
   updatePartnership(id: number, input: PartnershipUpdateInput): PartnershipProgram | undefined {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     if (!this.data.partnerships) this.data.partnerships = [];
 
     const prog = this.data.partnerships.find((p) => p.id === id);
@@ -553,7 +608,7 @@ class JsonStore {
   }
 
   deletePartnership(id: number): PartnershipProgram | undefined {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     if (!this.data.partnerships) return undefined;
 
     const idx = this.data.partnerships.findIndex((p) => p.id === id);
@@ -565,7 +620,7 @@ class JsonStore {
   }
 
   togglePartnership(id: number, field: string): PartnershipProgram | undefined {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     if (!this.data.partnerships) return undefined;
 
     const prog = this.data.partnerships.find((p) => p.id === id);
@@ -580,7 +635,7 @@ class JsonStore {
   }
 
   getStats(): AdminStats {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     return {
       totalProducts: this.data.products.length,
       activeProducts: this.data.products.filter((p) => p.is_active).length,
@@ -592,7 +647,7 @@ class JsonStore {
   }
 
   exportData(): { exported_at: string; categories: Category[]; products: Product[] } {
-    if (!this.initialized) this.load();
+    this.ensureFresh();
     return {
       exported_at: new Date().toISOString(),
       categories: this.data.categories,
